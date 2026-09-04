@@ -207,26 +207,7 @@ function CertificationDataDetailsPage() {
                       </TableBody>
                     </Table>
                   </div>
-                  <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
-                    <div>10 Rows</div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronsLeft className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronLeft className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 bg-blue-50 text-blue-600 border-blue-200">1</Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">2</Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">3</Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronRight className="h-3 w-3" /></Button>
-                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronsRight className="h-3 w-3" /></Button>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span>Rows per page</span>
-                        <select className="border border-border rounded px-2 py-1 bg-transparent">
-                          <option>10</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+                  <PaginationFooter />
                 </AccordionContent>
               </AccordionItem>
 
@@ -383,19 +364,103 @@ function CertificationDataDetailsPage() {
                       <TabsContent value="product">
                         <h3 className="text-base font-bold mb-4">Product</h3>
                         <Tabs defaultValue="menu" className="w-full">
-                          <TabsList className="mb-4">
-                            <TabsTrigger value="menu">Product - Menu</TabsTrigger>
-                            <TabsTrigger value="facility">Product - Facility</TabsTrigger>
-                          </TabsList>
-                          <TabsContent value="menu">
-                             <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
-                                Product Menu Data Placeholder
-                             </div>
+                          <div className="flex flex-wrap gap-4 justify-between items-center mb-4">
+                            <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4 border border-border">
+                              <Search className="h-4 w-4 text-muted-foreground" />
+                              <span className="text-border">|</span>
+                              <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                            </div>
+                            
+                            <div className="flex items-center gap-4">
+                              <TabsList>
+                                <TabsTrigger value="menu">Product - Menu</TabsTrigger>
+                                <TabsTrigger value="facility">Product - Facility</TabsTrigger>
+                              </TabsList>
+                            </div>
+                            
+                            <Button className="bg-[#a855f7] hover:bg-[#9333ea] text-white">Forbidden Product Name</Button>
+                          </div>
+                          
+                          {/* PRODUCT - MENU TAB */}
+                          <TabsContent value="menu" className="m-0 mt-4">
+                            <div className="overflow-x-auto rounded-lg border border-border">
+                              <Table className="text-[11px] min-w-[1000px]">
+                                <TableHeader className="bg-table-head">
+                                  <TableRow>
+                                    <TableHead className="font-semibold text-foreground">Product ID</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Product Name</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Address</TableHead>
+                                    <TableHead className="font-semibold text-foreground text-center">Product Status</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Product Type</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Scheme</TableHead>
+                                    <TableHead className="font-semibold text-foreground text-center">Head Office<br/>(HO ID)</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Head Office<br/>(HO Name)</TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {[1,2,3,4,5,6,7,8,9,10].map((id) => (
+                                    <TableRow key={id}>
+                                      <TableCell className="text-center">{id}</TableCell>
+                                      <TableCell>UBN Biskut G&M {id}</TableCell>
+                                      <TableCell>Address</TableCell>
+                                      <TableCell className="text-center">
+                                        {id <= 2 ? (
+                                          <Badge className="bg-blue-50 text-blue-600 border border-blue-200 font-normal shadow-none">● New</Badge>
+                                        ) : (
+                                          <Badge className="bg-green-50 text-green-600 border border-green-200 font-normal shadow-none">● Published</Badge>
+                                        )}
+                                      </TableCell>
+                                      <TableCell>Others (Lain-lain)</TableCell>
+                                      <TableCell>Indonesia Market</TableCell>
+                                      <TableCell className="text-center">{id}</TableCell>
+                                      <TableCell>HO Name</TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </div>
+                            <PaginationFooter />
                           </TabsContent>
-                          <TabsContent value="facility">
-                             <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
-                                Product Facility Data Placeholder
-                             </div>
+                          
+                          {/* PRODUCT - FACILITY TAB */}
+                          <TabsContent value="facility" className="m-0 mt-4">
+                            <div className="overflow-x-auto rounded-lg border border-border">
+                              <Table className="text-[11px] min-w-[1000px]">
+                                <TableHeader className="bg-table-head">
+                                  <TableRow>
+                                    <TableHead className="font-semibold text-foreground">Product ID</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Product Name</TableHead>
+                                    <TableHead className="font-semibold text-foreground text-center">Product Status</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Product Type</TableHead>
+                                    <TableHead className="font-semibold text-foreground text-center">Sub Product Category</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Scheme</TableHead>
+                                    <TableHead className="font-semibold text-foreground text-center">Head Office<br/>(HO ID)</TableHead>
+                                    <TableHead className="font-semibold text-foreground">Head Office<br/>(HO Name)</TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {[1,2,3,4,5,6,7,8,9,10].map((id) => (
+                                    <TableRow key={id}>
+                                      <TableCell className="text-center">{id}</TableCell>
+                                      <TableCell>UBN Biskut G&M {id}</TableCell>
+                                      <TableCell className="text-center">
+                                        {id <= 2 ? (
+                                          <Badge className="bg-blue-50 text-blue-600 border border-blue-200 font-normal shadow-none">● New</Badge>
+                                        ) : (
+                                          <Badge className="bg-green-50 text-green-600 border border-green-200 font-normal shadow-none">● Published</Badge>
+                                        )}
+                                      </TableCell>
+                                      <TableCell>Others (Lain-lain)</TableCell>
+                                      <TableCell className="text-center">-</TableCell>
+                                      <TableCell>Indonesia Market</TableCell>
+                                      <TableCell className="text-center">{id}</TableCell>
+                                      <TableCell>HO Name</TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </div>
+                            <PaginationFooter />
                           </TabsContent>
                         </Tabs>
                       </TabsContent>
@@ -504,10 +569,56 @@ function CertificationDataDetailsPage() {
 
                       {/* Questionnaire Tab */}
                       <TabsContent value="questionnaire">
-                         <h3 className="text-base font-bold mb-4">Questionnaire</h3>
-                         <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
-                            Questionnaire Data Placeholder
-                         </div>
+                        <div className="overflow-x-auto rounded-lg border border-border">
+                          <Table className="text-[11px] min-w-[800px]">
+                            <TableHeader className="bg-table-head">
+                              <TableRow>
+                                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                                <TableHead className="font-semibold text-foreground w-32">Questionnaire ID</TableHead>
+                                <TableHead className="font-semibold text-foreground">Questionnaire</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center w-24">Answer</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell>1</TableCell>
+                                <TableCell>12</TableCell>
+                                <TableCell>
+                                  <p className="font-medium">Is this restaurant a franchise restaurant?</p>
+                                  <p className="text-muted-foreground italic">Apakah restoran yang didaftarkan termasuk restoran dengan sistem franchise?</p>
+                                </TableCell>
+                                <TableCell className="text-center">Yes</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>2</TableCell>
+                                <TableCell>13</TableCell>
+                                <TableCell>
+                                  <p className="font-medium">Have all outlets with the same name in Indonesia already been registered in this application?</p>
+                                  <p className="text-muted-foreground italic">Apakah semua outlet dengan nama yang sama di Indonesia sudah didaftarkan untuk disertifikasi halal?</p>
+                                </TableCell>
+                                <TableCell className="text-center">Yes</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>3</TableCell>
+                                <TableCell>14</TableCell>
+                                <TableCell>
+                                  <p className="font-medium">Have all the menus sold, including the consignment menu already been registered?</p>
+                                  <p className="text-muted-foreground italic">Apakah semua menu yang dijual, termasuk menu konsinyasi sudah didaftarkan?</p>
+                                </TableCell>
+                                <TableCell className="text-center">Yes</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>4</TableCell>
+                                <TableCell>15</TableCell>
+                                <TableCell>
+                                  <p className="font-medium">Do all facilities free from porcine?</p>
+                                  <p className="text-muted-foreground italic">Apakah seluruh fasilitas yang digunakan bebas dari babi?</p>
+                                </TableCell>
+                                <TableCell className="text-center">Yes</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
                       </TabsContent>
                     </div>
 
@@ -530,4 +641,29 @@ function ChevronsLeft(props: any) {
 }
 function ChevronsRight(props: any) {
   return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m13 17 5-5-5-5"/><path d="m6 17 5-5-5-5"/></svg>
+}
+
+function PaginationFooter() {
+  return (
+    <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+      <div>10 Rows</div>
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronsLeft className="h-3 w-3" /></Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronLeft className="h-3 w-3" /></Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 bg-blue-50 text-blue-600 border-blue-200">1</Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">2</Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">3</Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronRight className="h-3 w-3" /></Button>
+          <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronsRight className="h-3 w-3" /></Button>
+        </div>
+        <div className="flex items-center gap-2">
+          <span>Rows per page</span>
+          <select className="border border-border rounded px-2 py-1 bg-transparent">
+            <option>10</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
 }
