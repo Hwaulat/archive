@@ -11,8 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchiveRouteImport } from './routes/archive'
-import { Route as CustomerDetailsRouteImport } from './routes/customer-details'
-import { Route as CustomerHistoryRouteImport } from './routes/customer-history'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,49 +22,31 @@ const ArchiveRoute = ArchiveRouteImport.update({
   path: '/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerDetailsRoute = CustomerDetailsRouteImport.update({
-  id: '/customer-details',
-  path: '/customer-details',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomerHistoryRoute = CustomerHistoryRouteImport.update({
-  id: '/customer-history',
-  path: '/customer-history',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-details': typeof CustomerDetailsRoute
-  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-details': typeof CustomerDetailsRoute
-  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-details': typeof CustomerDetailsRoute
-  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/archive' | '/customer-details' | '/customer-history'
+  fullPaths: '/' | '/archive'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/archive' | '/customer-details' | '/customer-history'
-  id: '__root__' | '/' | '/archive' | '/customer-details' | '/customer-history'
+  to: '/' | '/archive'
+  id: '__root__' | '/' | '/archive'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArchiveRoute: typeof ArchiveRoute
-  CustomerDetailsRoute: typeof CustomerDetailsRoute
-  CustomerHistoryRoute: typeof CustomerHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,28 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/customer-details': {
-      id: '/customer-details'
-      path: '/customer-details'
-      fullPath: '/customer-details'
-      preLoaderRoute: typeof CustomerDetailsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customer-history': {
-      id: '/customer-history'
-      path: '/customer-history'
-      fullPath: '/customer-history'
-      preLoaderRoute: typeof CustomerHistoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArchiveRoute: ArchiveRoute,
-  CustomerDetailsRoute: CustomerDetailsRoute,
-  CustomerHistoryRoute: CustomerHistoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

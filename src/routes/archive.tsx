@@ -162,16 +162,12 @@ function ArchivePage() {
                     <td className="px-3 py-4 text-secondary-foreground">{row.no}</td>
                     <td className="px-3 py-4">
                       <div className="flex gap-2">
-                        <Link to="/customer-details">
-                          <Button variant="table" size="icon-lg" aria-label="View detail">
-                            <Eye className="h-5 w-5" />
-                          </Button>
-                        </Link>
-                        <Link to="/customer-history">
-                          <Button variant="table" size="icon-lg" aria-label="View history">
-                            <History className="h-5 w-5" />
-                          </Button>
-                        </Link>
+                        <Button variant="table" size="icon-lg" aria-label="View detail">
+                          <Eye className="h-5 w-5" />
+                        </Button>
+                        <Button variant="table" size="icon-lg" aria-label="View history">
+                          <History className="h-5 w-5" />
+                        </Button>
                       </div>
                     </td>
                     <td className="px-3 py-4 text-secondary-foreground">{row.branch}</td>
