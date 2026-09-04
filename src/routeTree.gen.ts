@@ -11,7 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchiveRouteImport } from './routes/archive'
-import { Route as CustomerProfileRouteImport } from './routes/customer-profile'
+import { Route as CustomerDetailsRouteImport } from './routes/customer-details'
+import { Route as CustomerHistoryRouteImport } from './routes/customer-history'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +24,49 @@ const ArchiveRoute = ArchiveRouteImport.update({
   path: '/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerProfileRoute = CustomerProfileRouteImport.update({
-  id: '/customer-profile',
-  path: '/customer-profile',
+const CustomerDetailsRoute = CustomerDetailsRouteImport.update({
+  id: '/customer-details',
+  path: '/customer-details',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerHistoryRoute = CustomerHistoryRouteImport.update({
+  id: '/customer-history',
+  path: '/customer-history',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-profile': typeof CustomerProfileRoute
+  '/customer-details': typeof CustomerDetailsRoute
+  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-profile': typeof CustomerProfileRoute
+  '/customer-details': typeof CustomerDetailsRoute
+  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
-  '/customer-profile': typeof CustomerProfileRoute
+  '/customer-details': typeof CustomerDetailsRoute
+  '/customer-history': typeof CustomerHistoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/archive' | '/customer-profile'
+  fullPaths: '/' | '/archive' | '/customer-details' | '/customer-history'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/archive' | '/customer-profile'
-  id: '__root__' | '/' | '/archive' | '/customer-profile'
+  to: '/' | '/archive' | '/customer-details' | '/customer-history'
+  id: '__root__' | '/' | '/archive' | '/customer-details' | '/customer-history'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArchiveRoute: typeof ArchiveRoute
-  CustomerProfileRoute: typeof CustomerProfileRoute
+  CustomerDetailsRoute: typeof CustomerDetailsRoute
+  CustomerHistoryRoute: typeof CustomerHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,11 +85,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/customer-profile': {
-      id: '/customer-profile'
-      path: '/customer-profile'
-      fullPath: '/customer-profile'
-      preLoaderRoute: typeof CustomerProfileRouteImport
+    '/customer-details': {
+      id: '/customer-details'
+      path: '/customer-details'
+      fullPath: '/customer-details'
+      preLoaderRoute: typeof CustomerDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer-history': {
+      id: '/customer-history'
+      path: '/customer-history'
+      fullPath: '/customer-history'
+      preLoaderRoute: typeof CustomerHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +105,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArchiveRoute: ArchiveRoute,
-  CustomerProfileRoute: CustomerProfileRoute,
+  CustomerDetailsRoute: CustomerDetailsRoute,
+  CustomerHistoryRoute: CustomerHistoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
