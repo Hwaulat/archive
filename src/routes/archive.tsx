@@ -201,7 +201,7 @@ function HistoryDialog({ children }: { children: React.ReactNode }) {
 
 function ArchivePage() {
   return (
-    <div className="min-h-screen bg-brand pb-6">
+    <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" />
 
       <div className="mx-4 space-y-3">
