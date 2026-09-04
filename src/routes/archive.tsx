@@ -212,7 +212,6 @@ function HistoryDialog({ children }: { children: React.ReactNode }) {
 
 function ArchivePage() {
   const [viewByData, setViewByData] = useState<string>("type");
-  const [showData, setShowData] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] pb-6">
@@ -394,242 +393,47 @@ function ArchivePage() {
                       {row.phone}
                     </td>
                     <td className="px-3 py-4 text-secondary-foreground">{row.email}</td>
+                    <td className="px-3 py-4 text-secondary-foreground">{row.website}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+            <span className="text-sm text-secondary-foreground">10 Rows</span>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="icon" aria-label="First page">
+                <ChevronsLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Previous page">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              {[1, 2, 3].map((page) => (
+                <Button
+                  key={page}
+                  variant={page === 1 ? "soft" : "ghost"}
+                  size="icon"
+                  aria-current={page === 1 ? "page" : undefined}
+                >
+                  {page}
+                </Button>
+              ))}
+              <Button variant="ghost" size="icon" aria-label="Next page">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Last page">
+                <ChevronsRight className="h-4 w-4" />
+              </Button>
+            </div>
+            <label className="flex items-center gap-3 text-sm text-secondary-foreground">
+              Rows per page
+              <span className="flex h-9 items-center gap-2 rounded-md border border-border px-3">
                 10
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </span>
             </label>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function ArchivePage() {
-  const [viewByData, setViewByData] = useState<string>("type");
-  const [showData, setShowData] = useState<boolean>(false);
-
-  return (
-    <div className="min-h-screen bg-[#f8f9fa] pb-6">
-      <AppHeader title="Archive" />
-
-      <div className="mx-4 space-y-3">
-        <nav
-          aria-label="Breadcrumb"
-          className="flex items-center justify-between rounded-lg bg-card px-4 py-3"
-        >
-          <div className="flex items-center gap-2 text-sm">
-            <ArchiveIcon className="h-4 w-4 text-muted-foreground" />
-            <ChevronRight className="h-3 w-3 text-muted-foreground" />
-            <Link to="/archive" className="font-semibold text-foreground">
-              Archive
-            </Link>
-          </div>
-          <span className="text-sm text-muted-foreground">Tuesday, 25 Jun 2025 | 09:42</span>
-        </nav>
-
-        <section className="rounded-lg bg-card p-6">
-          <h2 className="font-display text-2xl font-bold text-foreground">Customer Profile</h2>
-
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-3">
-            <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-foreground">View by Data</span>
-              <Select 
-                value={viewByData} 
-                onValueChange={(val) => {
-                  setViewByData(val);
-                  setShowData(false);
-                }}
-              >
-                <SelectTrigger className="w-full h-[46px] bg-surface border-transparent rounded-md text-secondary-foreground">
-                  <SelectValue placeholder="- Select Data Type -" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="type">- Select Data Type -</SelectItem>
-                  <SelectItem value="branch">Branch</SelectItem>
-                  <SelectItem value="company-name">Company Name</SelectItem>
-                  <SelectItem value="company-country">Company Country</SelectItem>
-                  <SelectItem value="reg-no">Reg No.</SelectItem>
-                  <SelectItem value="product-group">Product Group and Product Type</SelectItem>
-                  <SelectItem value="certificate">Certificate No.</SelectItem>
-                  <SelectItem value="date">Date Period</SelectItem>
-                </SelectContent>
-              </Select>
-            </label>
-
-            {viewByData === "branch" && (
-              <>
-                <SelectField label="Branch" value="Code : A - Name : Pusat (Headquarter) & SME" />
-                <SelectField label="Date Period" value="Sign Up Date" />
-                <DateField label="Start Date" value="23 Aug 2024" />
-                <DateField label="End Date" value="23 Aug 2024" />
-              </>
-            )}
-
-            {viewByData === "company-name" && (
-              <>
-                <InputField label="Company Name" placeholder="Input company name" />
-              </>
-            )}
-
-            {viewByData === "company-country" && (
-              <>
-                <SelectField label="Country" value="Indonesia" />
-                <SelectField label="Date Period" value="Sign Up Date" />
-                <DateField label="Start Date" value="23 Aug 2024" />
-                <DateField label="End Date" value="23 Aug 2024" />
-              </>
-            )}
-
-            {viewByData === "reg-no" && (
-              <>
-                <InputField label="Reg No. 1" placeholder="Input Reg No." />
-                <InputField label="Reg No. 2" placeholder="Input Reg No." />
-              </>
-            )}
-
-            {viewByData === "product-group" && (
-              <>
-                <SelectField label="Product Group" value="Foods and Beverages" />
-                <SelectField label="Product Type" value="Retail" />
-                <SelectField label="Date Period" value="Sign Up Date" />
-                <DateField label="Start Date" value="23 Aug 2024" />
-                <DateField label="End Date" value="23 Aug 2024" />
-              </>
-            )}
-
-            {viewByData === "certificate" && (
-              <>
-                <InputField label="Certificate No." placeholder="Input certificate number" />
-              </>
-            )}
-
-            {viewByData === "date" && (
-              <>
-                <SelectField label="Date Period" value="Sign Up Date" />
-                <DateField label="Start Date" value="23 Aug 2024" />
-                <DateField label="End Date" value="23 Aug 2024" />
-              </>
-            )}
-
-            <div className="flex items-end">
-              <Button variant="brand" size="xl" onClick={() => setShowData(true)}>
-                View Data
-              </Button>
-            </div>
-          </div>
-
-          {showData && viewByData === "branch" && (
-            <>
-              <div className="mt-6">
-                <Button variant="gradient" size="xl">
-                  Export Data Active Page to Excel
-                </Button>
-              </div>
-
-              <div className="mt-6 flex h-[46px] w-full max-w-[340px] items-center gap-3 rounded-md bg-surface px-4">
-                <Search className="h-4 w-4 text-muted-foreground" />
-                <span className="text-border">|</span>
-                <input
-                  type="search"
-                  placeholder="Input some text..."
-                  className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-                />
-              </div>
-
-              <div className="mt-5 overflow-x-auto rounded-lg border border-border">
-                <table className="w-full min-w-[1500px] border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-table-head text-left">
-                      {columns.map((col) => (
-                        <th
-                          key={col}
-                          className="whitespace-nowrap px-3 py-4 font-semibold text-foreground"
-                        >
-                          {col}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row) => (
-                      <tr key={row.no} className="border-t border-border align-middle">
-                        <td className="px-3 py-4 text-secondary-foreground">{row.no}</td>
-                        <td className="px-3 py-4">
-                          <div className="flex gap-2">
-                            <Link to="/customer-details">
-                              <Button variant="table" size="icon-lg" aria-label="View detail">
-                                <Eye className="h-5 w-5" />
-                              </Button>
-                            </Link>
-                            <HistoryDialog>
-                              <Button variant="table" size="icon-lg" aria-label="View history">
-                                <History className="h-5 w-5" />
-                              </Button>
-                            </HistoryDialog>
-                          </div>
-                        </td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.branch}</td>
-                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                          {row.signUpDate}
-                        </td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.companyId}</td>
-                        <td className="px-3 py-4">
-                          <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
-                            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                            {row.status}
-                          </span>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                          {row.businessScale}
-                        </td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.address}</td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.country}</td>
-                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                          {row.phone}
-                        </td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.email}</td>
-                        <td className="px-3 py-4 text-secondary-foreground">{row.website}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-                <span className="text-sm text-secondary-foreground">10 Rows</span>
-                <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon" aria-label="First page">
-                    <ChevronsLeft className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" aria-label="Previous page">
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  {[1, 2, 3].map((page) => (
-                    <Button
-                      key={page}
-                      variant={page === 1 ? "soft" : "ghost"}
-                      size="icon"
-                      aria-current={page === 1 ? "page" : undefined}
-                    >
-                      {page}
-                    </Button>
-                  ))}
-                  <Button variant="ghost" size="icon" aria-label="Next page">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" aria-label="Last page">
-                    <ChevronsRight className="h-4 w-4" />
-                  </Button>
-                </div>
-                <label className="flex items-center gap-3 text-sm text-secondary-foreground">
-                  Rows per page
-                  <span className="flex h-9 items-center gap-2 rounded-md border border-border px-3">
-                    10
-                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                  </span>
-                </label>
-              </div>
             </>
           )}
         </section>

@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye } from 'lucide-react';
 
 export const Route = createFileRoute('/customer-details')({
@@ -564,12 +565,44 @@ function CustomerDetailsPage() {
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="list-of-akad" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                List of Akad
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <ListOfAkad />
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="registered-product" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Registered Product
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <RegisteredProduct />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="registered-material" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Registered Material
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <RegisteredMaterial />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="inquiry-of-material" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Inquiry of Material
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <InquiryOfMaterial />
+              </AccordionContent>
+            </AccordionItem>
+
             {/* Other Accordions */}
             {[
-              "List of Akad",
-              "Registered Product",
-              "Registered Material",
-              "Inquiry of Material",
               "Inquiry of Notification Letter",
               "Regular Report",
               "List of Halal Decree",
@@ -633,3 +666,388 @@ function PaginationFooter() {
     </div>
   );
 }
+
+function ListOfAkad() {
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select defaultValue="type">
+              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="All Akad (Exclude Disclaimer)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="type">All Akad (Exclude Disclaimer)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[2000px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+              <TableHead className="font-semibold text-foreground text-center">Action</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+              <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+              <TableHead className="font-semibold text-foreground">Service Type</TableHead>
+              <TableHead className="font-semibold text-foreground">Akad No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Akad Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Due Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Paid Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Approved Akad Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Currency</TableHead>
+              <TableHead className="font-semibold text-foreground">Total of Akad</TableHead>
+              <TableHead className="font-semibold text-foreground">Current Process</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell>
+                <div className="flex flex-col gap-2 w-[160px] mx-auto">
+                  <Button variant="soft" className="h-8 text-xs font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 w-full">Download Akad</Button>
+                  <Button variant="soft" className="h-8 text-xs font-semibold bg-green-50 text-green-600 hover:bg-green-100 w-full">Download Payment Proof</Button>
+                </div>
+              </TableCell>
+              <TableCell>186592</TableCell>
+              <TableCell>New</TableCell>
+              <TableCell className="max-w-[250px]">Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</TableCell>
+              <TableCell>Non BPJPH</TableCell>
+              <TableCell>SO78668</TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>IDR</TableCell>
+              <TableCell>3.500.000</TableCell>
+              <TableCell>
+                <Badge className="bg-orange-50 text-orange-600 hover:bg-orange-50 border border-orange-200 font-normal text-xs py-1 px-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-orange-500 mr-2" />
+                  Akad Payment Approved
+                </Badge>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <PaginationFooter />
+    </>
+  );
+}
+
+function RegisteredProduct() {
+  return (
+    <Tabs defaultValue="non-facility" className="w-full">
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          </div>
+          <TabsList className="h-[42px] bg-surface p-1">
+            <TabsTrigger value="non-facility" className="h-full px-6 text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">Product - Non Facility</TabsTrigger>
+            <TabsTrigger value="facility" className="h-full px-6 text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">Product - Facility</TabsTrigger>
+          </TabsList>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select defaultValue="type">
+              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold">Export Data to Excel</Button>
+        </div>
+      </div>
+
+      <TabsContent value="non-facility" className="mt-0 outline-none">
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[2000px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+                <TableHead className="font-semibold text-foreground">Ticket Row of Product</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office ID</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Product ID</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Publish Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Type</TableHead>
+                <TableHead className="font-semibold text-foreground">Sub Product<br/>Category</TableHead>
+                <TableHead className="font-semibold text-foreground">Halal Decree No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Valid Start</TableHead>
+                <TableHead className="font-semibold text-foreground">Valid End</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell><div className="h-6 w-6 bg-surface rounded" /></TableCell>
+                <TableCell>186592</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell>12356</TableCell>
+                <TableCell>PT Evigo Berjaya</TableCell>
+                <TableCell>1</TableCell>
+                <TableCell className="max-w-[300px]">ROTI TAWAR PANDAN HAILAI ROTI - O</TableCell>
+                <TableCell>
+                  <Badge className="bg-green-50 text-green-600 hover:bg-green-50 border border-green-200 font-normal text-xs py-1 px-3">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500 mr-2" />
+                    Published
+                  </Badge>
+                </TableCell>
+                <TableCell>Servis (Services)</TableCell>
+                <TableCell>Catering (Katering)</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>MUI-LPPOM00020001421025</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <PaginationFooter />
+      </TabsContent>
+
+      <TabsContent value="facility" className="mt-0 outline-none">
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[2000px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+                <TableHead className="font-semibold text-foreground">Ticket Row of Product</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office ID</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Product ID</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Publish Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Address</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Type</TableHead>
+                <TableHead className="font-semibold text-foreground">Halal Decree No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Valid Start</TableHead>
+                <TableHead className="font-semibold text-foreground">Valid End</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell><div className="h-6 w-6 bg-surface rounded" /></TableCell>
+                <TableCell>186592</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell>12356</TableCell>
+                <TableCell>PT Evigo Berjaya</TableCell>
+                <TableCell>1</TableCell>
+                <TableCell className="max-w-[250px]">ROTI TAWAR PANDAN HAILAI ROTI - O</TableCell>
+                <TableCell>
+                  <Badge className="bg-green-50 text-green-600 hover:bg-green-50 border border-green-200 font-normal text-xs py-1 px-3">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500 mr-2" />
+                    Published
+                  </Badge>
+                </TableCell>
+                <TableCell className="max-w-[200px]">Jl. Pemuda No. 5, Bogor, Indonesia</TableCell>
+                <TableCell>Servis (Services)</TableCell>
+                <TableCell>Facility - Outlet</TableCell>
+                <TableCell>MUI-LPPOM00020001421025</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <PaginationFooter />
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+function RegisteredMaterial() {
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select defaultValue="type">
+              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold">Export Data to Excel</Button>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[1500px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+              <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+              <TableHead className="font-semibold text-foreground">Material ID</TableHead>
+              <TableHead className="font-semibold text-foreground">Material Code</TableHead>
+              <TableHead className="font-semibold text-foreground">Material Name</TableHead>
+              <TableHead className="font-semibold text-foreground">Material Type</TableHead>
+              <TableHead className="font-semibold text-foreground">Material File</TableHead>
+              <TableHead className="font-semibold text-foreground">Producer</TableHead>
+              <TableHead className="font-semibold text-foreground">Producer Country</TableHead>
+              <TableHead className="font-semibold text-foreground">Supplier</TableHead>
+              <TableHead className="font-semibold text-foreground">Halal By</TableHead>
+              <TableHead className="font-semibold text-foreground">Certification No.</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell>186592</TableCell>
+              <TableCell>New</TableCell>
+              <TableCell>Servis (Services)</TableCell>
+              <TableCell>1</TableCell>
+              <TableCell>001</TableCell>
+              <TableCell>ACB</TableCell>
+              <TableCell>Raw Material + Additive</TableCell>
+              <TableCell><a href="#" className="text-blue-600 hover:underline">Download</a></TableCell>
+              <TableCell>Producer A</TableCell>
+              <TableCell>Indonesia</TableCell>
+              <TableCell>-</TableCell>
+              <TableCell>-</TableCell>
+              <TableCell>-</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <PaginationFooter />
+    </>
+  );
+}
+
+function InquiryOfMaterial() {
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          </div>
+          <Tabs defaultValue="view" className="w-[300px]">
+            <TabsList className="h-[42px] bg-surface p-1 w-full flex">
+              <TabsTrigger value="view" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">View by Data</TabsTrigger>
+              <TabsTrigger value="history" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">Activity History</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select defaultValue="type">
+              <SelectTrigger className="w-[200px] h-[42px] bg-surface border-border">
+                <SelectValue placeholder="Inquiry of Material Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="type">Inquiry of Material Type</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">Inquiry of Material Type</span>
+            <Select defaultValue="letter">
+              <SelectTrigger className="w-[200px] h-[42px] bg-surface border-border">
+                <SelectValue placeholder="Letter of Inquiry of Material" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="letter">Letter of Inquiry of Material</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[1500px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+              <TableHead className="font-semibold text-foreground text-center">Action</TableHead>
+              <TableHead className="font-semibold text-foreground">Request Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Inquiry of Material No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Inquiry of Material Type</TableHead>
+              <TableHead className="font-semibold text-foreground">Language</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Material Name</TableHead>
+              <TableHead className="font-semibold text-foreground">Producer</TableHead>
+              <TableHead className="font-semibold text-foreground">Producer Country</TableHead>
+              <TableHead className="font-semibold text-foreground text-center">Current Process</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2 justify-center">
+                  <Button variant="table" size="icon" className="h-10 w-10 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                    <Eye className="h-5 w-5" />
+                  </Button>
+                  <div className="flex flex-col gap-1 w-[130px]">
+                    <Button variant="soft" className="h-7 text-[10px] font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 w-full">Download Material</Button>
+                    <Button variant="soft" className="h-7 text-[10px] font-semibold bg-green-50 text-green-600 hover:bg-green-100 w-full">Download Letter</Button>
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>BB0868/SH/LPPOM MU...</TableCell>
+              <TableCell>Letter of Inquiry of Mat...</TableCell>
+              <TableCell>Indonesia</TableCell>
+              <TableCell>605654</TableCell>
+              <TableCell>Celatom FW 14</TableCell>
+              <TableCell>EP Mineral, LLC</TableCell>
+              <TableCell>Indonesia</TableCell>
+              <TableCell className="text-center">
+                <Badge className="bg-green-50 text-green-600 hover:bg-green-50 border border-green-200 font-normal text-xs py-1 px-3 inline-flex">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500 mr-2" />
+                  Complete
+                </Badge>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <PaginationFooter />
+    </>
+  );
+}
+
