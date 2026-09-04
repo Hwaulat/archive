@@ -1035,9 +1035,154 @@ function InquiryOfMaterial() {
               <TableCell>1</TableCell>
               <TableCell>
                 <div className="flex items-center gap-2 justify-center">
-                  <Button variant="table" size="icon" className="h-10 w-10 text-blue-600 bg-blue-50 hover:bg-blue-100">
-                    <Eye className="h-5 w-5" />
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="table" size="icon" className="h-10 w-10 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                        <Eye className="h-5 w-5" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-5xl p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
+                      <div className="bg-white rounded-lg">
+                        <div className="flex items-center justify-between p-6 pb-2 border-b-0">
+                          <h2 className="text-xl font-bold text-foreground">Inquiry of Material Details</h2>
+                          <DialogClose className="rounded-full p-2 bg-surface hover:bg-surface-hover transition-colors">
+                            <X className="h-5 w-5 text-muted-foreground" />
+                          </DialogClose>
+                        </div>
+                        <div className="p-6 pt-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                          
+                          {/* First Card Section */}
+                          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 gap-y-8">
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Request Date</p>
+                              <p className="text-sm font-semibold text-foreground">29 June 2026</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Inquiry of Material No.</p>
+                              <p className="text-sm font-semibold text-foreground">BB2345/SH/LPPOM MUI/X/2021</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Language</p>
+                              <p className="text-sm font-semibold text-foreground">Indonesia</p>
+                            </div>
+                            <div className="hidden md:block"></div>
+                            
+                            <div className="md:col-span-4">
+                              <p className="text-xs text-muted-foreground mb-1">Reg No. and Product Group</p>
+                              <p className="text-sm font-semibold text-foreground">Reg No: 60365 - Product Group : Ikan dan Produk Perikanan</p>
+                            </div>
+
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Aplication Type</p>
+                              <p className="text-sm font-semibold text-foreground">-</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Scheme</p>
+                              <p className="text-sm font-semibold text-foreground">-</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">BPJPH Product Type</p>
+                              <p className="text-sm font-semibold text-foreground">-</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Material Type</p>
+                              <p className="text-sm font-semibold text-foreground">Processign Aid</p>
+                            </div>
+
+                            <div className="md:col-span-4">
+                              <p className="text-xs text-muted-foreground mb-2">Kind of Product</p>
+                              <div className="space-y-2">
+                                <label className="flex items-center gap-2">
+                                  <div className="w-4 h-4 rounded-sm border border-border bg-surface flex items-center justify-center"></div>
+                                  <span className="text-sm font-semibold text-foreground">Consumption products (Produk yang dikonsumsi)</span>
+                                </label>
+                                <label className="flex items-center gap-2">
+                                  <div className="w-4 h-4 rounded-sm border border-border bg-surface flex items-center justify-center"></div>
+                                  <span className="text-sm font-semibold text-foreground">Oral Care products and Lipstick</span>
+                                </label>
+                                <label className="flex items-center gap-2">
+                                  <div className="w-4 h-4 rounded-sm border border-border bg-surface flex items-center justify-center"></div>
+                                  <span className="text-sm font-semibold text-foreground">Internal Medicine and Supplements (Obat dalam dan Suplement)</span>
+                                </label>
+                                <label className="flex items-center gap-2">
+                                  <div className="w-4 h-4 rounded-sm border border-border bg-surface flex items-center justify-center"></div>
+                                  <span className="text-sm font-semibold text-foreground">External used products (Produk Penggunaan Luar)</span>
+                                </label>
+                                <label className="flex items-center gap-2">
+                                  <div className="w-4 h-4 rounded-sm bg-brand flex items-center justify-center text-white">
+                                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 4L3.5 6.5L9 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                  </div>
+                                  <span className="text-sm font-semibold text-foreground">Consumer goods (Barang Gunaan)</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Material Data Section */}
+                          <div className="bg-surface rounded-xl p-6 border border-border">
+                            <h3 className="text-lg font-bold text-foreground mb-6">Material Data</h3>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 gap-y-8">
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Internal Code</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Material Name</p>
+                                <p className="text-sm font-semibold text-foreground">Celatom FQ</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Producer</p>
+                                <p className="text-sm font-semibold text-foreground">EP Mineral</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Producer Country</p>
+                                <p className="text-sm font-semibold text-foreground">USA</p>
+                              </div>
+                              
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Supplier</p>
+                                <p className="text-sm font-semibold text-foreground">PT. Sukabumi Trading Coy.</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Halal by</p>
+                                <p className="text-sm font-semibold text-foreground">ISLAMIC SERVICES OF AMERICA</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Certificate No</p>
+                                <p className="text-sm font-semibold text-foreground">1109-20-35743L</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Valid End</p>
+                                <p className="text-sm font-semibold text-foreground">29 June 2026</p>
+                              </div>
+
+                              <div className="md:col-span-4">
+                                <p className="text-xs text-muted-foreground mb-1">Other Document</p>
+                                <p className="text-sm font-semibold text-foreground">ALLERGEN & SENSITIVITY INFORMATION</p>
+                              </div>
+                              
+                              <div className="md:col-span-4">
+                                <p className="text-xs text-muted-foreground mb-1">Remarks</p>
+                                <div className="text-sm font-semibold text-foreground">
+                                  -Nama bahan pada SH: Celatom, Diatomaceous earth<br/>
+                                  -MSDS
+                                </div>
+                              </div>
+                              
+                              <div className="md:col-span-4 mt-2">
+                                <p className="text-xs text-muted-foreground mb-1">Material File</p>
+                                <Button variant="brand" className="h-8 text-xs font-semibold px-4 rounded-md bg-brand hover:bg-brand/90 text-white shadow-sm mt-1">
+                                  Download Material
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                   <div className="flex flex-col gap-1 w-[130px]">
                     <Button variant="soft" className="h-7 text-[10px] font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 w-full">Download Material</Button>
                     <Button variant="soft" className="h-7 text-[10px] font-semibold bg-green-50 text-green-600 hover:bg-green-100 w-full">Download Letter</Button>
