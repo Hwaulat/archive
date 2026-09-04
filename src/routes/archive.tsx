@@ -271,9 +271,11 @@ function ArchivePage() {
                     <td className="px-3 py-4 text-secondary-foreground">{row.no}</td>
                     <td className="px-3 py-4">
                       <div className="flex gap-2">
-                        <Button variant="table" size="icon-lg" aria-label="View detail">
-                          <Eye className="h-5 w-5" />
-                        </Button>
+                        <Link to="/customer-details">
+                          <Button variant="table" size="icon-lg" aria-label="View detail">
+                            <Eye className="h-5 w-5" />
+                          </Button>
+                        </Link>
                         <HistoryDialog>
                           <Button variant="table" size="icon-lg" aria-label="View history">
                             <History className="h-5 w-5" />
