@@ -5,10 +5,155 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Eye } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute('/customer-details')({
   component: CustomerDetailsPage,
 });
+
+const facilityHistoryData = [
+  { no: 1, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
+  { no: 2, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
+  { no: 3, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
+  { no: 4, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
+  { no: 5, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
+];
+
+function FacilityHistoryDialog({ children }: { children: React.ReactNode }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        {children}
+      </DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold">Activity History of Facility / Head Office</DialogTitle>
+        </DialogHeader>
+        
+        <div className="mt-4 space-y-4">
+          <div className="flex h-[46px] w-full max-w-[340px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input
+              type="search"
+              placeholder="Input some text..."
+              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </div>
+
+          <div className="rounded-lg border border-border">
+            <Table>
+              <TableHeader className="bg-table-head">
+                <TableRow>
+                  <TableHead className="font-semibold text-foreground">No.</TableHead>
+                  <TableHead className="font-semibold text-foreground">Date</TableHead>
+                  <TableHead className="font-semibold text-foreground">Activity</TableHead>
+                  <TableHead className="font-semibold text-foreground text-right">Done by</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {facilityHistoryData.map((item) => (
+                  <TableRow key={item.no}>
+                    <TableCell className="py-4 text-secondary-foreground">{item.no}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground whitespace-nowrap">{item.date}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground">{item.activity}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground text-right">{item.doneBy}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <PaginationFooter />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function FacilityDetailsDialog({ children }: { children: React.ReactNode }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold border-b pb-4">Facility / Head Office Details</DialogTitle>
+        </DialogHeader>
+        
+        <div className="mt-2 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">Facility / Head Office ID</p>
+                <p className="font-semibold text-sm">788937</p>
+             </div>
+             <div className="md:col-span-3">
+                <p className="text-xs text-muted-foreground mb-1">Facility / Head Office Name</p>
+                <p className="font-semibold text-sm">LPPOM Co. Ltd.</p>
+             </div>
+             
+             <div className="md:col-span-4">
+                <p className="text-xs text-muted-foreground mb-1">Address</p>
+                <p className="font-semibold text-sm">Jl. Wijaya Kusuma VIII No. 10 RT 02 RW 14, Kota Bogor, Indonesia</p>
+             </div>
+             
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">City</p>
+                <p className="font-semibold text-sm">Kota Bogor</p>
+             </div>
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">Country</p>
+                <p className="font-semibold text-sm">Indonesia</p>
+             </div>
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">ZIP Code</p>
+                <p className="font-semibold text-sm">16112</p>
+             </div>
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">Phone No.</p>
+                <p className="font-semibold text-sm">+6282124057273</p>
+             </div>
+             
+             <div>
+                <p className="text-xs text-muted-foreground mb-1">Fax No.</p>
+                <p className="font-semibold text-sm">-</p>
+             </div>
+             <div className="md:col-span-3">
+                <p className="text-xs text-muted-foreground mb-1">Facility / Head Office Email</p>
+                <p className="font-semibold text-sm">hardi.kurnia@halalmui.org</p>
+             </div>
+          </div>
+          
+          <div className="pt-6 border-t">
+            <h4 className="text-lg font-bold mb-4">Person in Charge</h4>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Name</p>
+                <p className="font-semibold text-sm">Hardi</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Title</p>
+                <p className="font-semibold text-sm">Mr</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Phone No.</p>
+                <p className="font-semibold text-sm">+6282124057273</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Mobile Phone No.</p>
+                <p className="font-semibold text-sm">+6282124057273</p>
+              </div>
+              <div className="md:col-span-4">
+                <p className="text-xs text-muted-foreground mb-1">Email</p>
+                <p className="font-semibold text-sm">hardi.kurnia@halalmui.org</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 function CustomerDetailsPage() {
   return (
@@ -256,9 +401,65 @@ function CustomerDetailsPage() {
               </AccordionContent>
             </AccordionItem>
 
+            {/* Facility / Head Office (HO) */}
+            <AccordionItem value="facility" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Facility / Head Office (HO)
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <div className="flex flex-wrap gap-4 justify-between mb-4">
+                  <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+                    <Search className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-border">|</span>
+                    <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                  </div>
+                  <FacilityHistoryDialog>
+                    <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Activity History</Button>
+                  </FacilityHistoryDialog>
+                </div>
+
+                <div className="overflow-x-auto rounded-lg border border-border">
+                  <Table className="text-xs min-w-[1000px]">
+                    <TableHeader className="bg-table-head">
+                      <TableRow>
+                        <TableHead className="font-semibold text-foreground">No</TableHead>
+                        <TableHead className="font-semibold text-foreground">Action</TableHead>
+                        <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office ID</TableHead>
+                        <TableHead className="font-semibold text-foreground">Facility /<br/>Head Office Name</TableHead>
+                        <TableHead className="font-semibold text-foreground">Address</TableHead>
+                        <TableHead className="font-semibold text-foreground">City</TableHead>
+                        <TableHead className="font-semibold text-foreground">Country</TableHead>
+                        <TableHead className="font-semibold text-foreground">Phone No.</TableHead>
+                        <TableHead className="font-semibold text-foreground">Last HPAS Information</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>1</TableCell>
+                        <TableCell>
+                          <FacilityDetailsDialog>
+                            <Button variant="table" size="icon" aria-label="View detail" className="h-8 w-8 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </FacilityDetailsDialog>
+                        </TableCell>
+                        <TableCell>4749</TableCell>
+                        <TableCell>Evigo China Plant 1</TableCell>
+                        <TableCell>Guangdong P.R. China</TableCell>
+                        <TableCell>Guangdong</TableCell>
+                        <TableCell>P.R China</TableCell>
+                        <TableCell>+6282124057273</TableCell>
+                        <TableCell>-</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+                <PaginationFooter />
+              </AccordionContent>
+            </AccordionItem>
+
             {/* Other Accordions */}
             {[
-              "Facility / Head Office (HO)",
               "List of Halal Registration",
               "List of Akad",
               "Registered Product",
