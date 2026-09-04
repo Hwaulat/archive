@@ -22,6 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -223,7 +224,24 @@ function ArchivePage() {
           <h2 className="font-display text-2xl font-bold text-foreground">Customer Profile</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-3">
-            <SelectField label="View by Data" value="Branch" />
+            <label className="block">
+              <span className="mb-2 block text-sm font-semibold text-foreground">View by Data</span>
+              <Select defaultValue="type">
+                <SelectTrigger className="w-full h-[46px] bg-surface border-transparent rounded-md text-secondary-foreground">
+                  <SelectValue placeholder="- Select Data Type -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="type">- Select Data Type -</SelectItem>
+                  <SelectItem value="branch">Branch</SelectItem>
+                  <SelectItem value="company-name">Company Name</SelectItem>
+                  <SelectItem value="company-country">Company Country</SelectItem>
+                  <SelectItem value="reg-no">Reg No.</SelectItem>
+                  <SelectItem value="product-group">Product Group and Product Type</SelectItem>
+                  <SelectItem value="certificate">Certificate No.</SelectItem>
+                  <SelectItem value="date">Date Period</SelectItem>
+                </SelectContent>
+              </Select>
+            </label>
             <SelectField label="Branch" value="Code : A - Name : Pusat (Headquarter) & SME" />
             <SelectField label="Date Period" value="Sign Up Date" />
             <DateField label="Start Date" value="23 Aug 2024" />
