@@ -468,6 +468,27 @@ function CustomerDetailsPage() {
                     <span className="text-border">|</span>
                     <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
                   </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold">View by Data</span>
+                      <Select defaultValue="type">
+                        <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                          <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                          <SelectItem value="branch">Branch</SelectItem>
+                          <SelectItem value="company-name">Company Name</SelectItem>
+                          <SelectItem value="company-country">Company Country</SelectItem>
+                          <SelectItem value="reg-no">Reg No.</SelectItem>
+                          <SelectItem value="product-group">Product Group and Product Type</SelectItem>
+                          <SelectItem value="certificate">Certificate No.</SelectItem>
+                          <SelectItem value="date">Date Period</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-semibold">Export Data to Excel</Button>
+                  </div>
                 </div>
 
                 <div className="overflow-x-auto rounded-lg border border-border">
