@@ -154,6 +154,130 @@ function FacilityDetailsDialog({ children }: { children: React.ReactNode }) {
   );
 }
 
+function HalalRegistrationDetailsDialog({ children }: { children: React.ReactNode }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold border-b pb-4">Certification Data Details</DialogTitle>
+        </DialogHeader>
+        
+        <div className="mt-2 space-y-6">
+          <div>
+             <h3 className="text-lg font-bold mb-4">Halal Registration Details</h3>
+             {/* Current Process */}
+             <div className="mb-4">
+               <p className="text-xs text-muted-foreground mb-1">Current Process</p>
+               <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-none">Done</Badge>
+             </div>
+             
+             <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg No.</p>
+                   <p className="font-semibold text-sm">186592</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Date</p>
+                   <p className="font-semibold text-sm">29 June 2026</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Completed Date</p>
+                   <p className="font-semibold text-sm">29 June 2026</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Type</p>
+                   <p className="font-semibold text-sm">Restaurant</p>
+                </div>
+                
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Application Type</p>
+                   <p className="font-semibold text-sm">Halal Product Audit</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Status</p>
+                   <p className="font-semibold text-sm">New</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Type of Product</p>
+                   <p className="font-semibold text-sm">Retail</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Type of Permit</p>
+                   <p className="font-semibold text-sm">-</p>
+                </div>
+
+                <div className="md:col-span-4">
+                   <p className="text-xs text-muted-foreground mb-1">Product Group</p>
+                   <p className="font-semibold text-sm">Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</p>
+                </div>
+
+                <div className="md:col-span-4">
+                   <p className="text-xs text-muted-foreground mb-1">BPJPH Product Type</p>
+                   <p className="font-semibold text-sm">Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</p>
+                </div>
+
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Total of Employee</p>
+                   <p className="font-semibold text-sm">0 Person</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Production Capacity</p>
+                   <p className="font-semibold text-sm">0/year</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Number of Work Shifts</p>
+                   <p className="font-semibold text-sm">0 /Day</p>
+                </div>
+             </div>
+          </div>
+          
+          <div className="pt-6 border-t">
+            <h3 className="text-lg font-bold mb-4">Registration Review</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Service Type</p>
+                <p className="font-semibold text-sm">-</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Pre-Assessment Status</p>
+                <p className="font-semibold text-sm">Yes</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Scope</p>
+                <p className="font-semibold text-sm">0</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Audit Type</p>
+                <p className="font-semibold text-sm">On Site</p>
+              </div>
+              
+              <div className="md:col-span-4">
+                <p className="text-xs text-muted-foreground mb-1">HAS Note</p>
+                <p className="font-semibold text-sm">-</p>
+              </div>
+              
+              <div className="md:col-span-4">
+                <p className="text-xs text-muted-foreground mb-1">Auditing Note</p>
+                <p className="font-semibold text-sm">-</p>
+              </div>
+              
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Samples Status</p>
+                <p className="font-semibold text-sm">No</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Lab Analysis Result</p>
+                <p className="font-semibold text-sm">Not OK</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function CustomerDetailsPage() {
   return (
     <div className="min-h-screen bg-brand pb-6">
@@ -457,9 +581,64 @@ function CustomerDetailsPage() {
               </AccordionContent>
             </AccordionItem>
 
+            {/* List of Halal Registration */}
+            <AccordionItem value="halal-registration" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                List of Halal Registration
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <div className="flex flex-wrap gap-4 justify-between mb-4">
+                  <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+                    <Search className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-border">|</span>
+                    <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto rounded-lg border border-border">
+                  <Table className="text-xs min-w-[1000px]">
+                    <TableHeader className="bg-table-head">
+                      <TableRow>
+                        <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+                        <TableHead className="font-semibold text-foreground w-16">Action</TableHead>
+                        <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                        <TableHead className="font-semibold text-foreground">Reg Date</TableHead>
+                        <TableHead className="font-semibold text-foreground">Reg Type</TableHead>
+                        <TableHead className="font-semibold text-foreground">Application Type</TableHead>
+                        <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+                        <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>1</TableCell>
+                        <TableCell>
+                          <HalalRegistrationDetailsDialog>
+                            <Button variant="table" size="icon" aria-label="View detail" className="h-8 w-8 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </HalalRegistrationDetailsDialog>
+                        </TableCell>
+                        <TableCell>186592</TableCell>
+                        <TableCell>29 June 2026</TableCell>
+                        <TableCell>Restaurant</TableCell>
+                        <TableCell>Halal Product Audit</TableCell>
+                        <TableCell>
+                          <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-none font-normal">New</Badge>
+                        </TableCell>
+                        <TableCell className="max-w-[250px] truncate" title="Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)">
+                          Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+                <PaginationFooter />
+              </AccordionContent>
+            </AccordionItem>
+
             {/* Other Accordions */}
             {[
-              "List of Halal Registration",
               "List of Akad",
               "Registered Product",
               "Registered Material",
