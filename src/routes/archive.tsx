@@ -212,6 +212,7 @@ function HistoryDialog({ children }: { children: React.ReactNode }) {
 
 function ArchivePage() {
   const [viewByData, setViewByData] = useState<string>("type");
+  const [showData, setShowData] = useState<boolean>(false);
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] pb-6">
