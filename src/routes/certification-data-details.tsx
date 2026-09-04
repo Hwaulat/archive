@@ -26,19 +26,19 @@ const halalDocuments = [
 
 function CertificationDataDetailsPage() {
   return (
-    <div className="min-h-screen bg-brand pb-6">
+    <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" icon={ArchiveIcon} />
       
       <div className="max-w-[1400px] mx-auto px-6 mt-6">
         {/* Breadcrumb */}
-        <div className="flex items-center text-xs text-white/80 mb-6">
+        <div className="flex items-center text-xs text-muted-foreground mb-6">
           <ArchiveIcon className="h-3 w-3 mr-1" />
-          <span className="cursor-pointer hover:text-white">Archive</span>
+          <span className="cursor-pointer hover:text-foreground">Archive</span>
           <ChevronRight className="h-3 w-3 mx-1" />
-          <Link to="/customer-details" className="cursor-pointer hover:text-white">Company Profile Details</Link>
+          <Link to="/customer-details" className="cursor-pointer hover:text-foreground">Company Profile Details</Link>
           <ChevronRight className="h-3 w-3 mx-1" />
-          <span className="text-white font-medium">Certification Data Details</span>
-          <div className="ml-auto flex items-center text-white text-xs">
+          <span className="text-foreground font-medium">Certification Data Details</span>
+          <div className="ml-auto flex items-center text-muted-foreground text-xs">
             Tuesday, 25 Jun 2025 | 09:42
           </div>
         </div>

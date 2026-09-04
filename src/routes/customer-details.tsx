@@ -157,20 +157,18 @@ function FacilityDetailsDialog({ children }: { children: React.ReactNode }) {
 
 function CustomerDetailsPage() {
   return (
-    <div className="min-h-screen bg-brand pb-6">
+    <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" />
 
       <div className="mx-4 space-y-3 mt-4">
         {/* Breadcrumb & Date */}
         <nav aria-label="Breadcrumb" className="flex items-center justify-between rounded-lg bg-card px-4 py-3">
           <div className="flex items-center gap-2 text-sm">
-            <ArchiveIcon className="h-4 w-4 text-muted-foreground" />
-            <ChevronRight className="h-3 w-3 text-muted-foreground" />
-            <Link to="/archive" className="font-medium text-muted-foreground hover:text-foreground">
+            <ArchiveIcon className="h-4 w-4 text-slate-500" />
+            <ChevronRight className="h-3 w-3 text-slate-400" />
+            <Link to="/archive" className="font-medium text-slate-500 hover:text-slate-900">
               Archive
             </Link>
-            <ChevronRight className="h-3 w-3 text-muted-foreground" />
-            <span className="font-semibold text-foreground">Company Profile Details</span>
           </div>
           <span className="text-sm text-muted-foreground">Tuesday, 25 Jun 2025 | 09:42</span>
         </nav>
