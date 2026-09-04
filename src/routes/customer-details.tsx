@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArchiveIcon, ChevronRight, Search, ChevronDown, ChevronLeft, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ArchiveIcon, ChevronRight, Search, ChevronDown, ChevronLeft, ChevronsLeft, ChevronsRight, Eye, Download, X } from 'lucide-react';
 import { AppHeader } from "@/components/app-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye } from 'lucide-react';
 
 export const Route = createFileRoute('/customer-details')({
   component: CustomerDetailsPage,
@@ -601,10 +601,26 @@ function CustomerDetailsPage() {
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="inquiry-of-notification-letter" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Inquiry of Notification Letter
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <InquiryOfNotificationLetter />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="regular-report" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Regular Report
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2">
+                <RegularReport />
+              </AccordionContent>
+            </AccordionItem>
+
             {/* Other Accordions */}
             {[
-              "Inquiry of Notification Letter",
-              "Regular Report",
               "List of Halal Decree",
               "List of HPAS Status / Certificate",
               "Halal Registration Activity History"
@@ -1051,3 +1067,460 @@ function InquiryOfMaterial() {
   );
 }
 
+
+
+function InquiryOfNotificationLetter() {
+  const [activeTab, setActiveTab] = useState<"view-by-data" | "activity-history">("view-by-data");
+
+  return (
+    <>
+      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex flex-1 items-center gap-4">
+          <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input
+              type="search"
+              placeholder="Input some text..."
+              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </div>
+          
+          <div className="flex h-10 items-center rounded-md bg-surface p-1">
+            <button
+              onClick={() => setActiveTab("view-by-data")}
+              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+                activeTab === "view-by-data"
+                  ? "bg-brand text-white shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              View by Data
+            </button>
+            <button
+              onClick={() => setActiveTab("activity-history")}
+              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+                activeTab === "activity-history"
+                  ? "bg-brand text-white shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Activity History
+            </button>
+          </div>
+        </div>
+
+        {activeTab === "view-by-data" && (
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
+            <div className="flex items-center gap-3">
+              <Select defaultValue="rks">
+                <SelectTrigger className="h-10 w-[200px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
+                  <span className="font-semibold text-foreground mr-1">Notification Letter Type</span>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="rks">RKS</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {activeTab === "view-by-data" ? (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[1200px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                <TableHead className="font-semibold text-foreground text-center">Action</TableHead>
+                <TableHead className="font-semibold text-foreground">Request Date</TableHead>
+                <TableHead className="font-semibold text-foreground">Notification letter No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Notification Letter Type</TableHead>
+                <TableHead className="font-semibold text-foreground">Language</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+                <TableHead className="font-semibold text-foreground text-center">Current Process</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell>
+                  <div className="flex flex-col gap-1 w-[120px] mx-auto">
+                    <Button variant="soft" className="h-7 text-[10px] font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 w-full">Download - ENG</Button>
+                    <Button variant="soft" className="h-7 text-[10px] font-semibold bg-green-50 text-green-600 hover:bg-green-100 w-full">Download - IDN</Button>
+                  </div>
+                </TableCell>
+                <TableCell>29 June 2026</TableCell>
+                <TableCell>KPP1481/SH/LPPOM/XII/2024</TableCell>
+                <TableCell>SKP</TableCell>
+                <TableCell>Indonesia</TableCell>
+                <TableCell>605654</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell>Produk Biologi (Biological Products)</TableCell>
+                <TableCell className="text-center">
+                  <Badge className="bg-green-50 text-green-600 hover:bg-green-50 border border-green-200 font-normal text-xs py-1 px-3 inline-flex">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500 mr-2" />
+                    Complete
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[800px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Date</TableHead>
+                <TableHead className="font-semibold text-foreground">Notification Letter No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Notification Letter Type</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Activity</TableHead>
+                <TableHead className="font-semibold text-foreground text-right">Done by</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell>29 June 2026</TableCell>
+                <TableCell>KPP1481/SH/LPPOM/XII/2024</TableCell>
+                <TableCell>SKP</TableCell>
+                <TableCell>605654</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell className="text-right">Hasan</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      )}
+      
+      <PaginationFooter />
+    </>
+  );
+}
+
+function RegularReport() {
+  const [activeTab, setActiveTab] = useState<"view-by-data" | "activity-history">("view-by-data");
+  
+  return (
+    <>
+      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex flex-1 items-center gap-4">
+          <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input
+              type="search"
+              placeholder="Input some text..."
+              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </div>
+          
+          <div className="flex h-10 items-center rounded-md bg-surface p-1">
+            <button
+              onClick={() => setActiveTab("view-by-data")}
+              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+                activeTab === "view-by-data"
+                  ? "bg-brand text-white shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              View by Data
+            </button>
+            <button
+              onClick={() => setActiveTab("activity-history")}
+              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+                activeTab === "activity-history"
+                  ? "bg-brand text-white shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Activity History
+            </button>
+          </div>
+        </div>
+
+        {activeTab === "view-by-data" && (
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
+            <div className="flex items-center gap-3">
+              <Select defaultValue="reg-no-and-product-group">
+                <SelectTrigger className="h-10 w-[240px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="reg-no-and-product-group">Reg No. and Product Group</SelectItem>
+                </SelectContent>
+              </Select>
+              
+              <Select defaultValue="635466">
+                <SelectTrigger className="h-10 w-[280px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
+                  <span className="font-semibold text-foreground mr-1">Reg No. and Product Group</span>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="635466">635466 - Susu dan analognya</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {activeTab === "view-by-data" ? (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[1500px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                <TableHead className="font-semibold text-foreground text-center w-24">Action</TableHead>
+                <TableHead className="font-semibold text-foreground">Report Date</TableHead>
+                <TableHead className="font-semibold text-foreground">Regular Report No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg Status</TableHead>
+                <TableHead className="font-semibold text-foreground">Product Group</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility ID</TableHead>
+                <TableHead className="font-semibold text-foreground">Facility Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Auditor Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Auditee Name</TableHead>
+                <TableHead className="font-semibold text-foreground">Correction</TableHead>
+                <TableHead className="font-semibold text-foreground text-center w-32">Current Process</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2 justify-center">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="table" size="icon" className="h-8 w-8 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
+                        <div className="bg-white rounded-lg">
+                          <div className="flex items-center justify-between p-6 pb-2 border-b-0">
+                            <h2 className="text-xl font-bold text-foreground">Regular Report Details</h2>
+                            <DialogClose className="rounded-full p-2 bg-surface hover:bg-surface-hover transition-colors">
+                              <X className="h-5 w-5 text-muted-foreground" />
+                            </DialogClose>
+                          </div>
+                          <div className="p-6 pt-4 space-y-6 max-h-[80vh] overflow-y-auto">
+                            {/* Grid Details */}
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 gap-y-8">
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Report Date</p>
+                                <p className="text-sm font-semibold text-foreground">29 June 2026</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Regular Report No.</p>
+                                <p className="text-sm font-semibold text-foreground">47968</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Language</p>
+                                <p className="text-sm font-semibold text-foreground">Indonesia</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Reg Status</p>
+                                <p className="text-sm font-semibold text-foreground">LPPOM Co. Ltd.</p>
+                              </div>
+                              
+                              <div className="md:col-span-4">
+                                <p className="text-xs text-muted-foreground mb-1">Reg No. and Product Group</p>
+                                <p className="text-sm font-semibold text-foreground">Reg No: 60365 - Product Group : Ikan dan Produk Perikanan</p>
+                              </div>
+
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Aplication Type</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Scheme</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">BPJPH Product Type</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Facility</p>
+                                <p className="text-sm font-semibold text-foreground">ID : 1 - NAME : Facility A</p>
+                              </div>
+
+                              <div className="md:col-span-4">
+                                <p className="text-xs text-muted-foreground mb-1">Address</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Start Date Internal Audit</p>
+                                <p className="text-sm font-semibold text-foreground">29 June 2026</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">End Date Internal Audit</p>
+                                <p className="text-sm font-semibold text-foreground">30 June 2026</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Auditor Name</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Auditee Name</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Corrective Action</p>
+                                <p className="text-sm font-semibold text-foreground">-</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1">Report File</p>
+                                <Button variant="brand" className="h-8 text-xs font-semibold px-4 mt-1 rounded-md bg-brand hover:bg-brand/90 text-white shadow-sm">
+                                  Download Report
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Memo Section */}
+                            <div className="bg-surface rounded-xl p-6 border border-border">
+                              <h3 className="text-lg font-bold text-foreground mb-4">Memo</h3>
+                              
+                              <div className="rounded-lg border border-border overflow-hidden bg-white">
+                                <Table className="text-[12px]">
+                                  <TableHeader className="bg-table-head">
+                                    <TableRow>
+                                      <TableHead className="font-semibold text-foreground w-20">Memo ID</TableHead>
+                                      <TableHead className="font-semibold text-foreground">Description</TableHead>
+                                      <TableHead className="font-semibold text-foreground w-32">Is Changed?</TableHead>
+                                      <TableHead className="font-semibold text-foreground">Memo</TableHead>
+                                    </TableRow>
+                                  </TableHeader>
+                                  <TableBody>
+                                    <TableRow>
+                                      <TableCell>1</TableCell>
+                                      <TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                          <span className="italic">Change of Company Management that affects halal policy</span>
+                                          <span className="text-muted-foreground">Perubahan Manajemen Halal yang berpengaruh terhadap kebijakan halal.</span>
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>-</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                      <TableCell>2</TableCell>
+                                      <TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                          <span className="italic">Change of Halal Assurance System (SOP, documents, Personnel, etc).</span>
+                                          <span className="text-muted-foreground">Perubahan komponen Manual SJH (SOP, dokumen, personal, dll).</span>
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>-</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                      <TableCell>3</TableCell>
+                                      <TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                          <span className="italic">Change of production facilities.</span>
+                                          <span className="text-muted-foreground">Perubahan Lokasi Pabrik.</span>
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>-</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                      <TableCell>4</TableCell>
+                                      <TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                          <span className="italic">Change of materials (producer/supplier, type of material).</span>
+                                          <span className="text-muted-foreground">Perubahan bahan (produsen/pemasok, tipe bahan, dll).</span>
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>-</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                      <TableCell>5</TableCell>
+                                      <TableCell>
+                                        <div className="flex flex-col gap-0.5">
+                                          <span className="italic">Change of formula and development new product.</span>
+                                          <span className="text-muted-foreground">Perubahan formula dan Pengembangan Produk Baru.</span>
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>No</TableCell>
+                                      <TableCell>-</TableCell>
+                                    </TableRow>
+                                  </TableBody>
+                                </Table>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                    
+                    <Button variant="table" size="icon" className="h-8 w-8 text-green-600 bg-green-50 hover:bg-green-100">
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableCell>
+                <TableCell>29 June 2026</TableCell>
+                <TableCell>47968</TableCell>
+                <TableCell>605654</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell>Produk Biologi (Biological Products)</TableCell>
+                <TableCell>1</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell className="text-center">
+                  <Badge className="bg-blue-50 text-blue-600 hover:bg-blue-50 border border-blue-200 font-normal text-xs py-1 px-3 inline-flex w-full justify-center">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2" />
+                    Open
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[800px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Date</TableHead>
+                <TableHead className="font-semibold text-foreground">Regular Report No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Activity</TableHead>
+                <TableHead className="font-semibold text-foreground text-right">Done by</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell>29 June 2026</TableCell>
+                <TableCell>47968</TableCell>
+                <TableCell>605654</TableCell>
+                <TableCell>New</TableCell>
+                <TableCell className="text-right">Hasan</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      )}
+      
+      <PaginationFooter />
+    </>
+  );
+}
