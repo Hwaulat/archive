@@ -1,0 +1,533 @@
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { ArchiveIcon, ChevronRight, ChevronLeft, Search } from 'lucide-react';
+import { AppHeader } from "@/components/app-header";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export const Route = createFileRoute('/certification-data-details')({
+  component: CertificationDataDetailsPage,
+});
+
+// Mock Data for Tabs
+const halalDocuments = [
+  { no: 1, docId: 2, name: 'HAS Manual (for new, development, with HAS Status B, and renewal registration)', status: 'Uploaded' },
+  { no: 2, docId: 3, name: 'HAS Status or HAS Certificate (for development/renewal registration)', status: 'Uploaded' },
+  { no: 3, docId: 4, name: 'Flow process chart of halal registered product', status: 'Uploaded' },
+  { no: 4, docId: 5, name: 'Statement of porcine free facility (for new applicant, or new facility)', status: 'Uploaded' },
+  { no: 5, docId: 6, name: 'Address list of all production facility (include maklon/toll, warehouse, pre-production facility and head office)', status: 'Uploaded' },
+  { no: 6, docId: 12, name: 'Evidence of Internal Audit or Gap Analysis Results (GA 1) (for new registrations or new facilities)', status: 'Uploaded' },
+  { no: 7, docId: 13, name: 'Business license (only for Indonesian companies) NIB', status: 'Uploaded' },
+  { no: 8, docId: 16, name: 'HACCP/GMP/Safety Management System certificate and the result of last audit...', status: 'Uploaded' },
+  { no: 9, docId: 20, name: 'Picture/design/packaging label/artwork of certified products...', status: 'Uploaded' },
+];
+
+function CertificationDataDetailsPage() {
+  return (
+    <div className="min-h-screen bg-brand pb-6">
+      <AppHeader title="Archive" icon={ArchiveIcon} />
+      
+      <div className="max-w-[1400px] mx-auto px-6 mt-6">
+        {/* Breadcrumb */}
+        <div className="flex items-center text-xs text-white/80 mb-6">
+          <ArchiveIcon className="h-3 w-3 mr-1" />
+          <span className="cursor-pointer hover:text-white">Archive</span>
+          <ChevronRight className="h-3 w-3 mx-1" />
+          <Link to="/customer-details" className="cursor-pointer hover:text-white">Company Profile Details</Link>
+          <ChevronRight className="h-3 w-3 mx-1" />
+          <span className="text-white font-medium">Certification Data Details</span>
+          <div className="ml-auto flex items-center text-white text-xs">
+            Tuesday, 25 Jun 2025 | 09:42
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-border overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b">
+            <h1 className="text-xl font-bold text-foreground">Certification Data Details</h1>
+            <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Activity History</Button>
+          </div>
+
+          <div className="p-6 space-y-6">
+            
+            {/* Halal Registration Details */}
+            <div className="bg-card rounded-lg border border-border p-6 pb-8">
+              <h3 className="text-base font-bold mb-4">Halal Registration Details</h3>
+              <div className="mb-4">
+                <p className="text-xs text-muted-foreground mb-1">Current Process</p>
+                <Badge variant="outline" className="text-red-500 border-red-200 bg-red-50 text-[10px]">● Waiting Approval Registration</Badge>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4 mt-6">
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg No.</p>
+                   <p className="font-semibold text-sm">186592</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Date</p>
+                   <p className="font-semibold text-sm">29 June 2026</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Completed Date</p>
+                   <p className="font-semibold text-sm">29 June 2026</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Type</p>
+                   <p className="font-semibold text-sm">Restaurant</p>
+                </div>
+                
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Application Type</p>
+                   <p className="font-semibold text-sm">1. Halal Product Audit</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Reg Status</p>
+                   <p className="font-semibold text-sm">New</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Type of Product</p>
+                   <p className="font-semibold text-sm">Retail</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Type of Permit</p>
+                   <p className="font-semibold text-sm">-</p>
+                </div>
+
+                <div className="md:col-span-4">
+                   <p className="text-xs text-muted-foreground mb-1">Product Group</p>
+                   <p className="font-semibold text-sm">Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</p>
+                </div>
+
+                <div className="md:col-span-4">
+                   <p className="text-xs text-muted-foreground mb-1">BPJPH Product Type</p>
+                   <p className="font-semibold text-sm">Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</p>
+                </div>
+
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Total of Employee</p>
+                   <p className="font-semibold text-sm">0 Person</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Production Capacity</p>
+                   <p className="font-semibold text-sm">0/year</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Number of Work Shifts</p>
+                   <p className="font-semibold text-sm">0 /Day</p>
+                </div>
+                <div>
+                   <p className="text-xs text-muted-foreground mb-1">Type of Permit</p>
+                   <p className="font-semibold text-sm">-</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Registration Review */}
+            <div className="bg-card rounded-lg border border-border p-6 pb-8">
+              <h3 className="text-base font-bold mb-4">Registration Review</h3>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Service Type</p>
+                  <p className="font-semibold text-sm">-</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Pre-Assessment Status</p>
+                  <p className="font-semibold text-sm">Yes</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Scope</p>
+                  <p className="font-semibold text-sm">0</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Audit Type</p>
+                  <p className="font-semibold text-sm">On Site</p>
+                </div>
+                
+                <div className="md:col-span-4">
+                  <p className="text-xs text-muted-foreground mb-1">HAS Note</p>
+                  <p className="font-semibold text-sm">-</p>
+                </div>
+                
+                <div className="md:col-span-4">
+                  <p className="text-xs text-muted-foreground mb-1">Auditing Note</p>
+                  <p className="font-semibold text-sm">-</p>
+                </div>
+                
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Samples Status</p>
+                  <p className="font-semibold text-sm">No</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Lab Analysis Result</p>
+                  <p className="font-semibold text-sm">Not OK</p>
+                </div>
+              </div>
+            </div>
+
+            <Accordion type="multiple" defaultValue={["audit", "bpjph", "certification"]} className="space-y-4">
+              {/* Audit Assignment Details */}
+              <AccordionItem value="audit" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+                <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                  Audit Assignment Details
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-6 pt-2">
+                  <div className="flex flex-wrap gap-4 justify-between mb-4">
+                    <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4 border border-border">
+                      <Search className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-border">|</span>
+                      <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto rounded-lg border border-border">
+                    <Table className="text-[11px] min-w-[1200px]">
+                      <TableHeader className="bg-table-head">
+                        <TableRow>
+                          <TableHead className="font-semibold text-foreground w-12">No</TableHead>
+                          <TableHead className="font-semibold text-foreground w-16">Action</TableHead>
+                          <TableHead className="font-semibold text-foreground">Audit<br/>Schedule ID</TableHead>
+                          <TableHead className="font-semibold text-foreground">Mandatory<br/>Letter</TableHead>
+                          <TableHead className="font-semibold text-foreground">Auditor</TableHead>
+                          <TableHead className="font-semibold text-foreground">Facility</TableHead>
+                          <TableHead className="font-semibold text-foreground">Facility Address</TableHead>
+                          <TableHead className="font-semibold text-foreground">First<br/>Confirmation Date</TableHead>
+                          <TableHead className="font-semibold text-foreground">Last<br/>Confirmation Date</TableHead>
+                          <TableHead className="font-semibold text-foreground">Confirmation<br/>Status</TableHead>
+                          <TableHead className="font-semibold text-foreground">Audit Schedule Period<br/><span className="font-normal flex justify-between mt-1"><span>Start Date</span><span>End Date</span></span></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell colSpan={11} className="text-center py-6 text-muted-foreground">
+                            No Data Available in Table
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                  <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+                    <div>10 Rows</div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronsLeft className="h-3 w-3" /></Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronLeft className="h-3 w-3" /></Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 bg-blue-50 text-blue-600 border-blue-200">1</Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">2</Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">3</Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronRight className="h-3 w-3" /></Button>
+                        <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronsRight className="h-3 w-3" /></Button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span>Rows per page</span>
+                        <select className="border border-border rounded px-2 py-1 bg-transparent">
+                          <option>10</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* BPJPH Registration Details */}
+              <AccordionItem value="bpjph" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+                <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                  BPJPH Registration Details
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-6 pt-2">
+                  <h3 className="text-sm font-bold mb-4">Registration Review</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Service Type</p>
+                      <p className="font-semibold text-sm">-</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">STTD No.</p>
+                      <p className="font-semibold text-sm">SH1987-1-000002</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">BPJPH Reg Status</p>
+                      <p className="font-semibold text-sm">-</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">BPJPH Reg Date</p>
+                      <p className="font-semibold text-sm">29 June 2026</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Total Days of Process</p>
+                      <p className="font-semibold text-sm">6498</p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Certification Data */}
+              <AccordionItem value="certification" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+                <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                  Certification Data
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-6 pt-2">
+                  
+                  <Tabs defaultValue="documents" className="w-full">
+                    {/* Visual Tab Navigation representing the wizard-like steps */}
+                    <div className="overflow-x-auto pb-4">
+                      <TabsList className="bg-transparent flex items-center h-auto min-w-max p-0 w-full justify-between px-8 py-4 gap-4 relative">
+                        {/* Connecting Line behind tabs */}
+                        <div className="absolute top-1/2 left-12 right-12 h-[2px] bg-gray-200 -z-10 -translate-y-4"></div>
+                        
+                        <TabsTrigger value="documents" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/halal-docs-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Halal Documents</span>
+                        </TabsTrigger>
+                        
+                        <TabsTrigger value="headoffice" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/head-office-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Head Office</span>
+                        </TabsTrigger>
+
+                        <TabsTrigger value="product" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/product-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Product</span>
+                        </TabsTrigger>
+                        
+                        <TabsTrigger value="material" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/material-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Material</span>
+                        </TabsTrigger>
+                        
+                        <TabsTrigger value="matrix" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/matrix-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Matrix & Material List</span>
+                        </TabsTrigger>
+                        
+                        <TabsTrigger value="questionnaire" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
+                          <img src="/questionnaire-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium">Questionnaire</span>
+                        </TabsTrigger>
+                      </TabsList>
+                    </div>
+
+                    <div className="mt-6">
+                      {/* Halal Documents Tab */}
+                      <TabsContent value="documents">
+                        <h3 className="text-base font-bold mb-4">Halal Document</h3>
+                        <div className="overflow-x-auto rounded-lg border border-border">
+                          <Table className="text-[11px] min-w-[800px]">
+                            <TableHeader className="bg-table-head">
+                              <TableRow>
+                                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                                <TableHead className="font-semibold text-foreground w-24">Document ID</TableHead>
+                                <TableHead className="font-semibold text-foreground">Document Name</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Download Template File</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Status</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Download Uploaded File</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {halalDocuments.map((doc) => (
+                                <TableRow key={doc.no}>
+                                  <TableCell>{doc.no}</TableCell>
+                                  <TableCell>{doc.docId}</TableCell>
+                                  <TableCell className="max-w-[400px]">
+                                    {doc.name.split('\n').map((line, i) => (
+                                      <p key={i} className={i > 0 ? "text-muted-foreground mt-1" : ""}>{line}</p>
+                                    ))}
+                                  </TableCell>
+                                  <TableCell className="text-center">
+                                    <span className="text-blue-500 hover:underline cursor-pointer italic">Download</span>
+                                  </TableCell>
+                                  <TableCell className="text-center">
+                                    <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-none font-normal text-[10px]">● Uploaded</Badge>
+                                  </TableCell>
+                                  <TableCell className="text-center">
+                                    <span className="text-blue-500 hover:underline cursor-pointer italic">Document.pdf</span>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </TabsContent>
+
+                      {/* Head Office Tab */}
+                      <TabsContent value="headoffice">
+                        <h3 className="text-base font-bold mb-4">Head Office (HO)</h3>
+                        <div className="overflow-x-auto rounded-lg border border-border">
+                          <Table className="text-[11px] min-w-[800px]">
+                            <TableHeader className="bg-table-head">
+                              <TableRow>
+                                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                                <TableHead className="font-semibold text-foreground w-16">Action</TableHead>
+                                <TableHead className="font-semibold text-foreground">Head Office<br/>(HO ID)</TableHead>
+                                <TableHead className="font-semibold text-foreground">Head Office (HO) Name</TableHead>
+                                <TableHead className="font-semibold text-foreground">Address</TableHead>
+                                <TableHead className="font-semibold text-foreground">City</TableHead>
+                                <TableHead className="font-semibold text-foreground">Country</TableHead>
+                                <TableHead className="font-semibold text-foreground">Phone</TableHead>
+                                <TableHead className="font-semibold text-foreground">Last HPAS Information</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell colSpan={9} className="text-center py-6 text-muted-foreground">
+                                  No Data Available in Table
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </TabsContent>
+
+                      {/* Product Tab (with sub-tabs) */}
+                      <TabsContent value="product">
+                        <h3 className="text-base font-bold mb-4">Product</h3>
+                        <Tabs defaultValue="menu" className="w-full">
+                          <TabsList className="mb-4">
+                            <TabsTrigger value="menu">Product - Menu</TabsTrigger>
+                            <TabsTrigger value="facility">Product - Facility</TabsTrigger>
+                          </TabsList>
+                          <TabsContent value="menu">
+                             <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
+                                Product Menu Data Placeholder
+                             </div>
+                          </TabsContent>
+                          <TabsContent value="facility">
+                             <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
+                                Product Facility Data Placeholder
+                             </div>
+                          </TabsContent>
+                        </Tabs>
+                      </TabsContent>
+
+                      {/* Material Tab */}
+                      <TabsContent value="material">
+                        <h3 className="text-base font-bold mb-4">Material</h3>
+                        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4 border border-border mb-4">
+                          <Search className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-border">|</span>
+                          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                        </div>
+                        <div className="overflow-x-auto rounded-lg border border-border">
+                          <Table className="text-[11px] min-w-[1000px]">
+                            <TableHeader className="bg-table-head">
+                              <TableRow>
+                                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                                <TableHead className="font-semibold text-foreground">Material ID</TableHead>
+                                <TableHead className="font-semibold text-foreground">Internal Code</TableHead>
+                                <TableHead className="font-semibold text-foreground">Material Name</TableHead>
+                                <TableHead className="font-semibold text-foreground">Material Type</TableHead>
+                                <TableHead className="font-semibold text-foreground">Material Information</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Upload Status</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Download File</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell colSpan={8} className="text-center py-6 text-muted-foreground">
+                                  No Data Available in Table
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                        <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+                          <div>10 Rows</div>
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-1">
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronsLeft className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronLeft className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 bg-blue-50 text-blue-600 border-blue-200">1</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">2</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">3</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronRight className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronsRight className="h-3 w-3" /></Button>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span>Rows per page</span>
+                              <select className="border border-border rounded px-2 py-1 bg-transparent">
+                                <option>10</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </TabsContent>
+
+                      {/* Matrix & Material List Tab */}
+                      <TabsContent value="matrix">
+                        <h3 className="text-base font-bold mb-4">Matrix & Material List</h3>
+                        <div className="overflow-x-auto rounded-lg border border-border">
+                          <Table className="text-[11px] min-w-[800px]">
+                            <TableHeader className="bg-table-head">
+                              <TableRow>
+                                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                                <TableHead className="font-semibold text-foreground">Download Template File</TableHead>
+                                <TableHead className="font-semibold text-foreground text-center">Upload Status</TableHead>
+                                <TableHead className="font-semibold text-foreground">Download Uploaded File</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell>1</TableCell>
+                                <TableCell>
+                                  <span className="text-blue-500 hover:underline cursor-pointer italic">Download</span>
+                                </TableCell>
+                                <TableCell className="text-center">
+                                  <Badge className="bg-red-50 text-red-500 border border-red-200 font-normal text-[10px]">● Not Uploaded</Badge>
+                                </TableCell>
+                                <TableCell>-</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                        <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
+                          <div>10 Rows</div>
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-1">
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronsLeft className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground" disabled><ChevronLeft className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 bg-blue-50 text-blue-600 border-blue-200">1</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">2</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground disabled:opacity-50">3</Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronRight className="h-3 w-3" /></Button>
+                              <Button variant="outline" size="icon" className="h-7 w-7 text-muted-foreground"><ChevronsRight className="h-3 w-3" /></Button>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span>Rows per page</span>
+                              <select className="border border-border rounded px-2 py-1 bg-transparent">
+                                <option>10</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </TabsContent>
+
+                      {/* Questionnaire Tab */}
+                      <TabsContent value="questionnaire">
+                         <h3 className="text-base font-bold mb-4">Questionnaire</h3>
+                         <div className="overflow-x-auto rounded-lg border border-border p-8 text-center text-muted-foreground">
+                            Questionnaire Data Placeholder
+                         </div>
+                      </TabsContent>
+                    </div>
+
+                  </Tabs>
+
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Needed to make ChevronLeft, ChevronsLeft, ChevronsRight work properly
+// Adding them manually because they are missing from some imports
+function ChevronsLeft(props: any) {
+  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+}
+function ChevronsRight(props: any) {
+  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m13 17 5-5-5-5"/><path d="m6 17 5-5-5-5"/></svg>
+}
