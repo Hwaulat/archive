@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Archive as ArchiveIcon,
@@ -107,6 +108,15 @@ function DateField({ label, value }: { label: string; value: string }) {
   );
 }
 
+function InputField({ label, placeholder }: { label: string; placeholder?: string }) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-sm font-semibold text-foreground">{label}</span>
+      <Input className="h-[46px] bg-surface" placeholder={placeholder} />
+    </label>
+  );
+}
+
 const historyData = [
   { no: 1, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
   { no: 2, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
@@ -201,6 +211,8 @@ function HistoryDialog({ children }: { children: React.ReactNode }) {
 }
 
 function ArchivePage() {
+  const [viewByData, setViewByData] = useState<string>("type");
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" />
@@ -226,7 +238,7 @@ function ArchivePage() {
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-3">
             <label className="block">
               <span className="mb-2 block text-sm font-semibold text-foreground">View by Data</span>
-              <Select defaultValue="type">
+              <Select value={viewByData} onValueChange={setViewByData}>
                 <SelectTrigger className="w-full h-[46px] bg-surface border-transparent rounded-md text-secondary-foreground">
                   <SelectValue placeholder="- Select Data Type -" />
                 </SelectTrigger>
@@ -242,10 +254,62 @@ function ArchivePage() {
                 </SelectContent>
               </Select>
             </label>
-            <SelectField label="Branch" value="Code : A - Name : Pusat (Headquarter) & SME" />
-            <SelectField label="Date Period" value="Sign Up Date" />
-            <DateField label="Start Date" value="23 Aug 2024" />
-            <DateField label="End Date" value="23 Aug 2024" />
+
+            {viewByData === "branch" && (
+              <>
+                <SelectField label="Branch" value="Code : A - Name : Pusat (Headquarter) & SME" />
+                <SelectField label="Date Period" value="Sign Up Date" />
+                <DateField label="Start Date" value="23 Aug 2024" />
+                <DateField label="End Date" value="23 Aug 2024" />
+              </>
+            )}
+
+            {viewByData === "company-name" && (
+              <>
+                <InputField label="Company Name" placeholder="Input company name" />
+              </>
+            )}
+
+            {viewByData === "company-country" && (
+              <>
+                <SelectField label="Country" value="Indonesia" />
+                <SelectField label="Date Period" value="Sign Up Date" />
+                <DateField label="Start Date" value="23 Aug 2024" />
+                <DateField label="End Date" value="23 Aug 2024" />
+              </>
+            )}
+
+            {viewByData === "reg-no" && (
+              <>
+                <InputField label="Reg No. 1" placeholder="Input Reg No." />
+                <InputField label="Reg No. 2" placeholder="Input Reg No." />
+              </>
+            )}
+
+            {viewByData === "product-group" && (
+              <>
+                <SelectField label="Product Group" value="Foods and Beverages" />
+                <SelectField label="Product Type" value="Retail" />
+                <SelectField label="Date Period" value="Sign Up Date" />
+                <DateField label="Start Date" value="23 Aug 2024" />
+                <DateField label="End Date" value="23 Aug 2024" />
+              </>
+            )}
+
+            {viewByData === "certificate" && (
+              <>
+                <InputField label="Certificate No." placeholder="Input certificate number" />
+              </>
+            )}
+
+            {viewByData === "date" && (
+              <>
+                <SelectField label="Date Period" value="Sign Up Date" />
+                <DateField label="Start Date" value="23 Aug 2024" />
+                <DateField label="End Date" value="23 Aug 2024" />
+              </>
+            )}
+
             <div className="flex items-end">
               <Button variant="brand" size="xl">
                 View Data
