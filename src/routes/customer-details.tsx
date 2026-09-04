@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye } from 'lucide-react';
 
 export const Route = createFileRoute('/customer-details')({
@@ -353,10 +354,21 @@ function CustomerDetailsPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold">View by Data</span>
-                    <div className="flex h-[42px] items-center gap-2 rounded-md border border-border px-4 text-sm bg-surface min-w-[280px] justify-between">
-                      All Halal Registration (Exclude Disclaimer)
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    </div>
+                    <Select defaultValue="type">
+                      <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                        <SelectValue placeholder="- Select Data Type -" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="type">- Select Data Type -</SelectItem>
+                        <SelectItem value="branch">Branch</SelectItem>
+                        <SelectItem value="company-name">Company Name</SelectItem>
+                        <SelectItem value="company-country">Company Country</SelectItem>
+                        <SelectItem value="reg-no">Reg No.</SelectItem>
+                        <SelectItem value="product-group">Product Group and Product Type</SelectItem>
+                        <SelectItem value="certificate">Certificate No.</SelectItem>
+                        <SelectItem value="date">Date Period</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -468,6 +480,27 @@ function CustomerDetailsPage() {
                     <Search className="h-4 w-4 text-muted-foreground" />
                     <span className="text-border">|</span>
                     <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold">View by Data</span>
+                      <Select defaultValue="type">
+                        <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
+                          <SelectValue placeholder="- Select Data Type -" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="type">- Select Data Type -</SelectItem>
+                          <SelectItem value="branch">Branch</SelectItem>
+                          <SelectItem value="company-name">Company Name</SelectItem>
+                          <SelectItem value="company-country">Company Country</SelectItem>
+                          <SelectItem value="reg-no">Reg No.</SelectItem>
+                          <SelectItem value="product-group">Product Group and Product Type</SelectItem>
+                          <SelectItem value="certificate">Certificate No.</SelectItem>
+                          <SelectItem value="date">Date Period</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Export Data to Excel</Button>
                   </div>
                 </div>
 
