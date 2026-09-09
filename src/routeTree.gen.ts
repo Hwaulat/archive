@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchiveRouteImport } from './routes/archive'
 import { Route as CertificationDataDetailsRouteImport } from './routes/certification-data-details'
 import { Route as CustomerDetailsRouteImport } from './routes/customer-details'
+import { Route as FacilityHeadOfficeEditRouteImport } from './routes/facility-head-office-edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,18 +36,25 @@ const CustomerDetailsRoute = CustomerDetailsRouteImport.update({
   path: '/customer-details',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FacilityHeadOfficeEditRoute = FacilityHeadOfficeEditRouteImport.update({
+  id: '/facility-head-office-edit',
+  path: '/facility-head-office-edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -54,19 +62,30 @@ export interface FileRoutesById {
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/archive' | '/certification-data-details' | '/customer-details'
+    | '/'
+    | '/archive'
+    | '/certification-data-details'
+    | '/customer-details'
+    | '/facility-head-office-edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/archive' | '/certification-data-details' | '/customer-details'
+  to:
+    | '/'
+    | '/archive'
+    | '/certification-data-details'
+    | '/customer-details'
+    | '/facility-head-office-edit'
   id:
     | '__root__'
     | '/'
     | '/archive'
     | '/certification-data-details'
     | '/customer-details'
+    | '/facility-head-office-edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -74,6 +93,7 @@ export interface RootRouteChildren {
   ArchiveRoute: typeof ArchiveRoute
   CertificationDataDetailsRoute: typeof CertificationDataDetailsRoute
   CustomerDetailsRoute: typeof CustomerDetailsRoute
+  FacilityHeadOfficeEditRoute: typeof FacilityHeadOfficeEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -106,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomerDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/facility-head-office-edit': {
+      id: '/facility-head-office-edit'
+      path: '/facility-head-office-edit'
+      fullPath: '/facility-head-office-edit'
+      preLoaderRoute: typeof FacilityHeadOfficeEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -114,6 +141,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArchiveRoute: ArchiveRoute,
   CertificationDataDetailsRoute: CertificationDataDetailsRoute,
   CustomerDetailsRoute: CustomerDetailsRoute,
+  FacilityHeadOfficeEditRoute: FacilityHeadOfficeEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -10,6 +10,7 @@ import {
   ChevronsRight,
   Eye,
   History,
+  Pencil,
   Search,
 } from "lucide-react";
 
@@ -64,7 +65,8 @@ const columns = [
   "Country",
   "Phone No.",
   "Email",
-  "Company Website",
+  "PIC",
+  "Contact Person",
 ];
 
 const rows = [
@@ -79,7 +81,36 @@ const rows = [
     country: "Indonesia",
     phone: "+62251 8660472",
     email: "a3.include@gmail.com",
-    website: "www.include.co.id",
+    pic: "Name : Cinta Aja,\nTitle : QC Manager,\nPhone No. : 12 300,\nEmail : a3.include@gmail.com",
+    contactPerson: "Name : Evie Tamala,\nTitle : KAHI,\nPhone No. : 12 300, 12 30 0,\nEmail : maqfhirahulya@gmail.com",
+  },
+  {
+    no: 2,
+    branch: "Kota Bandung",
+    signUpDate: "26 Aug 2024",
+    companyId: "31",
+    status: "Existing Customer",
+    businessScale: "26 Aug 2024, 00:00:00",
+    address: "Jl. Pasteur No. 18, Bandung, Indonesia, 40171",
+    country: "Indonesia",
+    phone: "+6222 2050 1108",
+    email: "info@cintaaja.com",
+    pic: "Name : Budi Santoso,\nTitle : Admin,\nPhone No. : 0812 3456 7890,\nEmail : admin@cintaaja.com",
+    contactPerson: "Name : Rina Hartati,\nTitle : Sales,\nPhone No. : 0812 3456 4321,\nEmail : sales@cintaaja.com",
+  },
+  {
+    no: 3,
+    branch: "Kota Surabaya",
+    signUpDate: "30 Aug 2024",
+    companyId: "48",
+    status: "Existing Customer",
+    businessScale: "30 Aug 2024, 00:00:00",
+    address: "Jl. Mayjen Sungkono No. 69, Surabaya, Indonesia, 60242",
+    country: "Indonesia",
+    phone: "+6231 8270 1821",
+    email: "sales@mahfiroh.com",
+    pic: "Name : Sari Wijaya,\nTitle : Operation Manager,\nPhone No. : 0812 9988 1234,\nEmail : om@mahfiroh.com",
+    contactPerson: "Name : Dimas Putra,\nTitle : Marketing,\nPhone No. : 0812 2233 5566,\nEmail : marketing@mahfiroh.com",
   },
 ];
 
@@ -324,7 +355,7 @@ function ArchivePage() {
             </div>
           </div>
 
-          {showData && viewByData === "branch" && (
+          {showData && viewByData !== "type" && (
             <>
               <div className="mt-6">
                 <Button variant="gradient" size="xl">
@@ -332,109 +363,117 @@ function ArchivePage() {
                 </Button>
               </div>
 
-          <div className="mt-6 flex h-[46px] w-full max-w-[340px] items-center gap-3 rounded-md bg-surface px-4">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <span className="text-border">|</span>
-            <input
-              type="search"
-              placeholder="Input some text..."
-              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            />
-          </div>
+              <div className="mt-6 flex h-[46px] w-full max-w-[340px] items-center gap-3 rounded-md bg-surface px-4">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <span className="text-border">|</span>
+                <input
+                  type="search"
+                  placeholder="Input some text..."
+                  className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                />
+              </div>
 
-          <div className="mt-5 overflow-x-auto rounded-lg border border-border">
-            <table className="w-full min-w-[1500px] border-collapse text-sm">
-              <thead>
-                <tr className="bg-table-head text-left">
-                  {columns.map((col) => (
-                    <th
-                      key={col}
-                      className="whitespace-nowrap px-3 py-4 font-semibold text-foreground"
+              <div className="mt-5 overflow-x-auto rounded-lg border border-border">
+                <table className="w-full min-w-[1500px] border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-table-head text-left">
+                      {columns.map((col) => (
+                        <th
+                          key={col}
+                          className="whitespace-nowrap px-3 py-4 font-semibold text-foreground"
+                        >
+                          {col}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row) => (
+                      <tr key={row.no} className="border-t border-border align-middle">
+                        <td className="px-3 py-4 text-secondary-foreground">{row.no}</td>
+                        <td className="px-3 py-4">
+                          <div className="flex gap-2">
+                            <Link to="/customer-details">
+                              <Button variant="table" size="icon-lg" aria-label="View detail">
+                                <Eye className="h-5 w-5" />
+                              </Button>
+                            </Link>
+                            <Button variant="table" size="icon-lg" aria-label="Edit detail">
+                              <Pencil className="h-5 w-5" />
+                            </Button>
+                            <HistoryDialog>
+                              <Button variant="table" size="icon-lg" aria-label="View history">
+                                <History className="h-5 w-5" />
+                              </Button>
+                            </HistoryDialog>
+                          </div>
+                        </td>
+                        <td className="px-3 py-4 text-secondary-foreground">{row.branch}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
+                          {row.signUpDate}
+                        </td>
+                        <td className="px-3 py-4 text-secondary-foreground">{row.companyId}</td>
+                        <td className="px-3 py-4">
+                          <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
+                            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                            {row.status}
+                          </span>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
+                          {row.businessScale}
+                        </td>
+                        <td className="px-3 py-4 text-secondary-foreground">{row.address}</td>
+                        <td className="px-3 py-4 text-secondary-foreground">{row.country}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
+                          {row.phone}
+                        </td>
+                        <td className="px-3 py-4 text-secondary-foreground">{row.email}</td>
+                        <td className="px-3 py-4 text-secondary-foreground">
+                          <span className="whitespace-pre-line leading-6">{row.pic}</span>
+                        </td>
+                        <td className="px-3 py-4 text-secondary-foreground">
+                          <span className="whitespace-pre-line leading-6">{row.contactPerson}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                <span className="text-sm text-secondary-foreground">10 Rows</span>
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="icon" aria-label="First page">
+                    <ChevronsLeft className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" aria-label="Previous page">
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  {[1, 2, 3].map((page) => (
+                    <Button
+                      key={page}
+                      variant={page === 1 ? "soft" : "ghost"}
+                      size="icon"
+                      aria-current={page === 1 ? "page" : undefined}
                     >
-                      {col}
-                    </th>
+                      {page}
+                    </Button>
                   ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => (
-                  <tr key={row.no} className="border-t border-border align-middle">
-                    <td className="px-3 py-4 text-secondary-foreground">{row.no}</td>
-                    <td className="px-3 py-4">
-                      <div className="flex gap-2">
-                        <Link to="/customer-details">
-                          <Button variant="table" size="icon-lg" aria-label="View detail">
-                            <Eye className="h-5 w-5" />
-                          </Button>
-                        </Link>
-                        <HistoryDialog>
-                          <Button variant="table" size="icon-lg" aria-label="View history">
-                            <History className="h-5 w-5" />
-                          </Button>
-                        </HistoryDialog>
-                      </div>
-                    </td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.branch}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                      {row.signUpDate}
-                    </td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.companyId}</td>
-                    <td className="px-3 py-4">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
-                        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                      {row.businessScale}
-                    </td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.address}</td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.country}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-secondary-foreground">
-                      {row.phone}
-                    </td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.email}</td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.website}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-            <span className="text-sm text-secondary-foreground">10 Rows</span>
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon" aria-label="First page">
-                <ChevronsLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Previous page">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              {[1, 2, 3].map((page) => (
-                <Button
-                  key={page}
-                  variant={page === 1 ? "soft" : "ghost"}
-                  size="icon"
-                  aria-current={page === 1 ? "page" : undefined}
-                >
-                  {page}
-                </Button>
-              ))}
-              <Button variant="ghost" size="icon" aria-label="Next page">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Last page">
-                <ChevronsRight className="h-4 w-4" />
-              </Button>
-            </div>
-            <label className="flex items-center gap-3 text-sm text-secondary-foreground">
-              Rows per page
-              <span className="flex h-9 items-center gap-2 rounded-md border border-border px-3">
-                10
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
-              </span>
-            </label>
-          </div>
+                  <Button variant="ghost" size="icon" aria-label="Next page">
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" aria-label="Last page">
+                    <ChevronsRight className="h-4 w-4" />
+                  </Button>
+                </div>
+                <label className="flex items-center gap-3 text-sm text-secondary-foreground">
+                  Rows per page
+                  <span className="flex h-9 items-center gap-2 rounded-md border border-border px-3">
+                    10
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                  </span>
+                </label>
+              </div>
             </>
           )}
         </section>
