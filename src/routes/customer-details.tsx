@@ -730,8 +730,6 @@ function CustomerDetailsPage() {
 
             {/* Other Accordions */}
             {[
-              "List of Halal Decree",
-              "List of HPAS Status / Certificate",
               "Halal Registration Activity History"
             ].map((title, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`} className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
@@ -827,15 +825,12 @@ function ListOfAkad() {
                 <SelectValue placeholder="Select Data Type -" />
               </SelectTrigger>
               <SelectContent className="border-[#0d6efd] bg-[#0d6efd] text-white shadow-lg">
-                {viewByDataOptions.map((option) => (
-                  <SelectItem
-                    key={option.value}
-                    value={option.value}
-                    className="text-white focus:bg-[#0b5ed7] focus:text-white data-[state=checked]:bg-[#0b5ed7]"
-                  >
-                    {option.label}
-                  </SelectItem>
-                ))}
+                <SelectItem
+                  value="all-registration"
+                  className="text-white focus:bg-[#0b5ed7] focus:text-white data-[state=checked]:bg-[#0b5ed7]"
+                >
+                  All Halal Registration (Exclude Disclaimer)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -1985,22 +1980,20 @@ function ListOfHalalDecree() {
 
   return (
     <>
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <span className="text-border">|</span>
-          <input
-            type="search"
-            placeholder="Input some text..."
-            className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-          />
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
           <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
             <Select value={viewValue} onValueChange={setViewValue}>
-              <SelectTrigger className="h-10 w-[420px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
+              <SelectTrigger className="w-[420px] h-[42px] bg-white border-border text-foreground">
                 <SelectValue placeholder="Select Data Type -" />
               </SelectTrigger>
               <SelectContent>
@@ -2011,8 +2004,8 @@ function ListOfHalalDecree() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="h-10 bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold px-6">View</Button>
           </div>
+          <Button className="h-[42px] bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold px-6">View</Button>
         </div>
       </div>
 
@@ -2059,22 +2052,20 @@ function ListOfHpasStatusCertificate() {
 
   return (
     <>
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <span className="text-border">|</span>
-          <input
-            type="search"
-            placeholder="Input some text..."
-            className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-          />
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
           <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
             <Select value={viewValue} onValueChange={setViewValue}>
-              <SelectTrigger className="h-10 w-[420px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
+              <SelectTrigger className="w-[420px] h-[42px] bg-white border-border text-foreground">
                 <SelectValue placeholder="Select Data Type -" />
               </SelectTrigger>
               <SelectContent>
@@ -2085,8 +2076,8 @@ function ListOfHpasStatusCertificate() {
                 ))}
               </SelectContent>
             </Select>
-            <Button className="h-10 bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold px-6">View</Button>
           </div>
+          <Button className="h-[42px] bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold px-6">View</Button>
         </div>
       </div>
 
@@ -2219,51 +2210,30 @@ function RegularReport() {
 
   return (
     <>
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-4">
-          <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <span className="text-border">|</span>
-            <input
-              type="search"
-              placeholder="Input some text..."
-              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            />
-          </div>
-
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "view" | "history")} className="w-[300px]">
-            <TabsList className="h-[42px] bg-surface p-1 w-full flex">
-              <TabsTrigger value="view" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">
-                View by Data
-              </TabsTrigger>
-              <TabsTrigger value="history" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">
-                Activity History
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
         </div>
-
-        {activeTab === "view" && (
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
-            <div className="flex items-center gap-3">
-              <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="h-10 w-[230px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
-                  <SelectValue placeholder="Select Data Type -" />
-                </SelectTrigger>
-                <SelectContent>
-                  {regularReportFilterOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              {renderFilterValueControl()}
-            </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select defaultValue="all-registration">
+              <SelectTrigger className="w-[320px] h-[42px] border-[#0d6efd] bg-[#0d6efd] text-white shadow-none hover:bg-[#0b5ed7] focus:ring-0 data-[placeholder]:text-white [&>span]:text-white [&>svg]:text-white">
+                <SelectValue placeholder="Select Data Type -" />
+              </SelectTrigger>
+              <SelectContent className="border-[#0d6efd] bg-[#0d6efd] text-white shadow-lg">
+                <SelectItem
+                  value="all-registration"
+                  className="text-white focus:bg-[#0b5ed7] focus:text-white data-[state=checked]:bg-[#0b5ed7]"
+                >
+                  All Halal Registration (Exclude Disclaimer)
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        )}
+        </div>
       </div>
 
       {activeTab === "view" ? (
