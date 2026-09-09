@@ -24,30 +24,50 @@ const halalDocuments = [
   { no: 9, docId: 20, name: 'Picture/design/packaging label/artwork of certified products...', status: 'Uploaded' },
 ];
 
+function PageBreadcrumb({ currentLabel, rightContent }: { currentLabel: string; rightContent?: React.ReactNode }) {
+  return (
+    <nav aria-label="Breadcrumb" className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3 shadow-sm">
+      <div className="flex items-center gap-2.5 text-sm">
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-slate-600">
+          <ArchiveIcon className="h-4 w-4" />
+        </span>
+        <ChevronRight className="h-4 w-4 text-slate-400" />
+        <Link to="/archive" className="font-medium text-slate-500 transition-colors hover:text-slate-900">
+          Archive
+        </Link>
+        <ChevronRight className="h-4 w-4 text-slate-400" />
+        <Link to="/customer-details" className="font-medium text-slate-500 transition-colors hover:text-slate-900">
+          Company Profile Details
+        </Link>
+        <ChevronRight className="h-4 w-4 text-slate-400" />
+        <span className="font-semibold text-foreground">{currentLabel}</span>
+      </div>
+      {rightContent ?? <span className="text-sm text-muted-foreground">Tuesday, 25 Jun 2025 | 09:42</span>}
+    </nav>
+  );
+}
+
 function CertificationDataDetailsPage() {
   return (
     <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" icon={ArchiveIcon} />
       
-      <div className="max-w-[1400px] mx-auto px-6 mt-6">
-        {/* Breadcrumb */}
-        <div className="flex items-center text-xs text-muted-foreground mb-6">
-          <ArchiveIcon className="h-3 w-3 mr-1" />
-          <span className="cursor-pointer hover:text-foreground">Archive</span>
-          <ChevronRight className="h-3 w-3 mx-1" />
-          <Link to="/customer-details" className="cursor-pointer hover:text-foreground">Company Profile Details</Link>
-          <ChevronRight className="h-3 w-3 mx-1" />
-          <span className="text-foreground font-medium">Certification Data Details</span>
-          <div className="ml-auto flex items-center text-muted-foreground text-xs">
-            Tuesday, 25 Jun 2025 | 09:42
-          </div>
-        </div>
+      <div className="mx-4 mt-4 space-y-4">
+        <PageBreadcrumb
+          currentLabel="Certification Data Details"
+          rightContent={<span className="text-sm text-muted-foreground">Tuesday, 25 Jun 2025 | 09:42</span>}
+        />
 
         <div className="bg-white rounded-lg shadow-sm border border-border overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b">
+          <div className="flex items-center gap-3 px-6 py-4 border-b">
+            <Link to="/customer-details">
+              <Button variant="outline" className="gap-2">
+                <ChevronLeft className="h-4 w-4" />
+                Back
+              </Button>
+            </Link>
             <h1 className="text-xl font-bold text-foreground">Certification Data Details</h1>
-            <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Activity History</Button>
           </div>
 
           <div className="p-6 space-y-6">
@@ -253,38 +273,38 @@ function CertificationDataDetailsPage() {
                   <Tabs defaultValue="documents" className="w-full">
                     {/* Visual Tab Navigation representing the wizard-like steps */}
                     <div className="overflow-x-auto pb-4">
-                      <TabsList className="bg-transparent flex items-center h-auto min-w-max p-0 w-full justify-between px-8 py-4 gap-4 relative">
+                      <TabsList className="bg-transparent flex flex-wrap items-center justify-start h-auto min-w-max p-0 w-full gap-3 px-2 py-4 relative">
                         {/* Connecting Line behind tabs */}
-                        <div className="absolute top-1/2 left-12 right-12 h-[2px] bg-gray-200 -z-10 -translate-y-4"></div>
+                        <div className="absolute top-1/2 left-10 right-10 h-[2px] bg-gray-200 -z-10 -translate-y-4"></div>
                         
-                        <TabsTrigger value="documents" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/halal-docs-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Halal Documents</span>
+                        <TabsTrigger value="documents" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/halal-docs-icon.png" alt="Halal Documents" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Halal Documents</span>
                         </TabsTrigger>
                         
-                        <TabsTrigger value="headoffice" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/head-office-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Head Office</span>
+                        <TabsTrigger value="headoffice" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/head-office-icon.png" alt="Head Office" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Head Office</span>
                         </TabsTrigger>
 
-                        <TabsTrigger value="product" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/product-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Product</span>
+                        <TabsTrigger value="product" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/product-icon.png" alt="Product" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Product</span>
                         </TabsTrigger>
                         
-                        <TabsTrigger value="material" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/material-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Material</span>
+                        <TabsTrigger value="material" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/material-icon.png" alt="Material" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Material</span>
                         </TabsTrigger>
                         
-                        <TabsTrigger value="matrix" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/matrix-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Matrix & Material List</span>
+                        <TabsTrigger value="matrix" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/matrix-icon.png" alt="Matrix & Material List" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Matrix & Material List</span>
                         </TabsTrigger>
                         
-                        <TabsTrigger value="questionnaire" className="flex flex-col gap-2 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm rounded-xl p-4 border border-transparent data-[state=active]:border-blue-100 z-10 bg-white">
-                          <img src="/questionnaire-icon.png" alt="" className="w-10 h-10 object-contain mx-auto" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
-                          <span className="text-xs font-medium">Questionnaire</span>
+                        <TabsTrigger value="questionnaire" className="z-10 flex items-center gap-3 rounded-xl border border-transparent bg-white p-3 data-[state=active]:border-blue-100 data-[state=active]:bg-blue-50 data-[state=active]:shadow-sm">
+                          <img src="/questionnaire-icon.png" alt="Questionnaire" className="h-10 w-10 shrink-0 object-contain" onError={(e) => e.currentTarget.src = "https://placehold.co/40x40/png"} />
+                          <span className="text-xs font-medium whitespace-nowrap">Questionnaire</span>
                         </TabsTrigger>
                       </TabsList>
                     </div>

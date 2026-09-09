@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchiveRouteImport } from './routes/archive'
 import { Route as CertificationDataDetailsRouteImport } from './routes/certification-data-details'
 import { Route as CustomerDetailsRouteImport } from './routes/customer-details'
+import { Route as FacilityHeadOfficeEditRouteImport } from './routes/facility-head-office-edit'
 import { Route as UpdateCompanyProfileRouteImport } from './routes/update-company-profile'
 
 const IndexRoute = IndexRouteImport.update({
@@ -36,6 +37,11 @@ const CustomerDetailsRoute = CustomerDetailsRouteImport.update({
   path: '/customer-details',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FacilityHeadOfficeEditRoute = FacilityHeadOfficeEditRouteImport.update({
+  id: '/facility-head-office-edit',
+  path: '/facility-head-office-edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UpdateCompanyProfileRoute = UpdateCompanyProfileRouteImport.update({
   id: '/update-company-profile',
   path: '/update-company-profile',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
   '/update-company-profile': typeof UpdateCompanyProfileRoute
 }
 export interface FileRoutesByTo {
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
   '/update-company-profile': typeof UpdateCompanyProfileRoute
 }
 export interface FileRoutesById {
@@ -62,6 +70,7 @@ export interface FileRoutesById {
   '/archive': typeof ArchiveRoute
   '/certification-data-details': typeof CertificationDataDetailsRoute
   '/customer-details': typeof CustomerDetailsRoute
+  '/facility-head-office-edit': typeof FacilityHeadOfficeEditRoute
   '/update-company-profile': typeof UpdateCompanyProfileRoute
 }
 export interface FileRouteTypes {
@@ -71,6 +80,7 @@ export interface FileRouteTypes {
     | '/archive'
     | '/certification-data-details'
     | '/customer-details'
+    | '/facility-head-office-edit'
     | '/update-company-profile'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -78,6 +88,7 @@ export interface FileRouteTypes {
     | '/archive'
     | '/certification-data-details'
     | '/customer-details'
+    | '/facility-head-office-edit'
     | '/update-company-profile'
   id:
     | '__root__'
@@ -85,6 +96,7 @@ export interface FileRouteTypes {
     | '/archive'
     | '/certification-data-details'
     | '/customer-details'
+    | '/facility-head-office-edit'
     | '/update-company-profile'
   fileRoutesById: FileRoutesById
 }
@@ -93,6 +105,7 @@ export interface RootRouteChildren {
   ArchiveRoute: typeof ArchiveRoute
   CertificationDataDetailsRoute: typeof CertificationDataDetailsRoute
   CustomerDetailsRoute: typeof CustomerDetailsRoute
+  FacilityHeadOfficeEditRoute: typeof FacilityHeadOfficeEditRoute
   UpdateCompanyProfileRoute: typeof UpdateCompanyProfileRoute
 }
 
@@ -126,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomerDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/facility-head-office-edit': {
+      id: '/facility-head-office-edit'
+      path: '/facility-head-office-edit'
+      fullPath: '/facility-head-office-edit'
+      preLoaderRoute: typeof FacilityHeadOfficeEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/update-company-profile': {
       id: '/update-company-profile'
       path: '/update-company-profile'
@@ -141,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArchiveRoute: ArchiveRoute,
   CertificationDataDetailsRoute: CertificationDataDetailsRoute,
   CustomerDetailsRoute: CustomerDetailsRoute,
+  FacilityHeadOfficeEditRoute: FacilityHeadOfficeEditRoute,
   UpdateCompanyProfileRoute: UpdateCompanyProfileRoute,
 }
 export const routeTree = rootRouteImport

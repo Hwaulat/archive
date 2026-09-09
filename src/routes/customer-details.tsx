@@ -624,9 +624,11 @@ function CustomerDetailsPage() {
                             </FacilityDetailsDialog>
                             {(halalRegViewBy === "company-name" || halalRegViewBy === "branch") && (
                               <>
-                                <Button variant="table" size="icon" aria-label="Edit" className="h-8 w-8 text-amber-600 bg-amber-50 hover:bg-amber-100">
-                                  <Pencil className="h-4 w-4" />
-                                </Button>
+                                <Link to="/facility-head-office-edit">
+                                  <Button variant="table" size="icon" aria-label="Edit" className="h-8 w-8 text-amber-600 bg-amber-50 hover:bg-amber-100">
+                                    <Pencil className="h-4 w-4" />
+                                  </Button>
+                                </Link>
                                 <Button variant="table" size="icon" aria-label="Delete" className="h-8 w-8 text-red-600 bg-red-50 hover:bg-red-100">
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
