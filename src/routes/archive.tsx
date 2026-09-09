@@ -10,6 +10,7 @@ import {
   ChevronsRight,
   Eye,
   History,
+  Pencil,
   Search,
 } from "lucide-react";
 
@@ -53,33 +54,43 @@ export const Route = createFileRoute("/archive")({
 });
 
 const columns = [
-  "No",
+  "No.",
   "Action",
   "Branch",
   "Sign Up Date",
   "Company ID",
+  "Company Name",
   "Customer Status",
   "Business Scale that Registered on SI Halal",
   "Company Address",
   "Country",
   "Phone No.",
   "Email",
-  "Company Website",
+  "Person In Charge (PIC)",
+  "Contact Person (CP)",
 ];
 
 const rows = [
   {
-    no: 1,
+    no: "1.",
     branch: "Pusat (Headquarter)",
-    signUpDate: "23 Aug 2024",
+    signUpDate: "22-08-2025",
     companyId: "22",
+    companyName: "Evigo",
     status: "Existing Customer",
-    businessScale: "23 Aug 2024, 00:00:00",
+    businessScale: "2026-04-27 00:00:00",
     address: "Jl. Pemuda No.5, Bogor, Indonesia, 23166",
     country: "Indonesia",
     phone: "+62251 8660472",
     email: "a3.include@gmail.com",
-    website: "www.include.co.id",
+    picName: "Cinta Aja",
+    picTitle: "QC Manager",
+    picPhone: "12 300, 12 300",
+    picEmail: "a3.include@gmail.com",
+    cpName: "Evie Tamala",
+    cpTitle: "KAHI",
+    cpPhone: "12 300, 12 30 0",
+    cpEmail: "maqhfirahulya@gmail.com"
   },
 ];
 
@@ -264,10 +275,48 @@ function ArchivePage() {
 
             {viewByData === "branch" && (
               <>
-                <SelectField label="Branch" value="Code : A - Name : Pusat (Headquarter) & SME" />
-                <SelectField label="Date Period" value="Sign Up Date" />
-                <DateField label="Start Date" value="23 Aug 2024" />
-                <DateField label="End Date" value="23 Aug 2024" />
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-foreground">Branch</span>
+                  <Select defaultValue="a">
+                    <SelectTrigger className="w-full h-[46px] bg-surface border-transparent rounded-md text-secondary-foreground">
+                      <SelectValue placeholder="- Select Branch -" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <div className="px-2 pb-2 pt-2 sticky top-0 bg-white z-10 border-b">
+                        <input type="text" placeholder="" className="w-full h-8 px-2 border border-input rounded-sm text-xs focus:outline-none focus:ring-1 focus:ring-brand" />
+                        <div className="text-xs text-muted-foreground mt-1 px-1">Searching...</div>
+                      </div>
+                      <SelectItem value="default" className="hidden">- Select Branch -</SelectItem>
+                      <SelectItem value="a">Code : A - Name : Pusat (Headquarter) & SME</SelectItem>
+                      <SelectItem value="b">Code : B - Name : All Province (Exclude Pusat (Headquarter) & SME)</SelectItem>
+                      <SelectItem value="00">Code : 00 - Name : Pusat (Headquarter)</SelectItem>
+                      <SelectItem value="01">Code : 01 - Name : Jawa Barat</SelectItem>
+                      <SelectItem value="02">Code : 02 - Name : Lampung</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </label>
+                
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-foreground">Date Period</span>
+                  <Select defaultValue="signup">
+                    <SelectTrigger className="w-full h-[46px] bg-surface border-transparent rounded-md text-secondary-foreground">
+                      <SelectValue placeholder="Date Period" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="signup">Sign Up Date</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-foreground">Start Date</span>
+                  <input type="date" className="w-full h-[46px] px-3 rounded-md border border-border bg-white text-sm focus:outline-none focus:ring-1 focus:ring-brand" defaultValue="2024-08-23" />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-foreground">End Date</span>
+                  <input type="date" className="w-full h-[46px] px-3 rounded-md border border-border bg-white text-sm focus:outline-none focus:ring-1 focus:ring-brand" defaultValue="2024-08-23" />
+                </label>
               </>
             )}
 
@@ -324,7 +373,7 @@ function ArchivePage() {
             </div>
           </div>
 
-          {showData && viewByData === "branch" && (
+          {showData && (
             <>
               <div className="mt-6">
                 <Button variant="gradient" size="xl">
@@ -343,7 +392,7 @@ function ArchivePage() {
           </div>
 
           <div className="mt-5 overflow-x-auto rounded-lg border border-border">
-            <table className="w-full min-w-[1500px] border-collapse text-sm">
+            <table className="w-full min-w-[2000px] border-collapse text-sm">
               <thead>
                 <tr className="bg-table-head text-left">
                   {columns.map((col) => (
@@ -367,6 +416,9 @@ function ArchivePage() {
                             <Eye className="h-5 w-5" />
                           </Button>
                         </Link>
+                        <Button variant="table" size="icon-lg" aria-label="Edit detail">
+                          <Pencil className="h-5 w-5" />
+                        </Button>
                         <HistoryDialog>
                           <Button variant="table" size="icon-lg" aria-label="View history">
                             <History className="h-5 w-5" />
@@ -379,6 +431,7 @@ function ArchivePage() {
                       {row.signUpDate}
                     </td>
                     <td className="px-3 py-4 text-secondary-foreground">{row.companyId}</td>
+                    <td className="px-3 py-4 text-secondary-foreground">{row.companyName}</td>
                     <td className="px-3 py-4">
                       <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1.5 text-xs font-semibold text-brand">
                         <span className="h-1.5 w-1.5 rounded-full bg-brand" />
@@ -394,7 +447,18 @@ function ArchivePage() {
                       {row.phone}
                     </td>
                     <td className="px-3 py-4 text-secondary-foreground">{row.email}</td>
-                    <td className="px-3 py-4 text-secondary-foreground">{row.website}</td>
+                    <td className="px-3 py-4 text-secondary-foreground whitespace-nowrap">
+                      <strong>Name : </strong>{row.picName},<br />
+                      <strong>Title : </strong>{row.picTitle},<br />
+                      <strong>Phone No. : </strong>{row.picPhone},<br />
+                      <strong>Email : </strong>{row.picEmail}
+                    </td>
+                    <td className="px-3 py-4 text-secondary-foreground whitespace-nowrap">
+                      <strong>Name : </strong>{row.cpName},<br />
+                      <strong>Title : </strong>{row.cpTitle},<br />
+                      <strong>Phone No. : </strong>{row.cpPhone},<br />
+                      <strong>Email : </strong>{row.cpEmail}
+                    </td>
                   </tr>
                 ))}
               </tbody>

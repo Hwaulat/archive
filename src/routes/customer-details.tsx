@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArchiveIcon, ChevronRight, Search, ChevronDown, ChevronLeft, ChevronsLeft, ChevronsRight, Eye, Download, X } from 'lucide-react';
+import { ArchiveIcon, ChevronRight, Search, ChevronDown, ChevronLeft, ChevronsLeft, ChevronsRight, Eye, Download, X, Pencil, Trash2 } from 'lucide-react';
 import { AppHeader } from "@/components/app-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,87 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute('/customer-details')({
   component: CustomerDetailsPage,
 });
+
+const companyProfileHistoryData = [
+  { no: 1, date: "02-12-2025", activity: 'Update client priority status based on scheduling from : "-" to be : "Priority" on Customer data : "Evigo" with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 2, date: "22-08-2025", activity: 'Update company name from : "Evigo Ltd." to be : "Evigo" on Customer data : "Evigo Ltd." with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 3, date: "22-08-2025", activity: 'Update address on Customer data : "Evigo Ltd." with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 4, date: "22-08-2025", activity: 'Update password account on Customer data : "Evigo Ltd." with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 5, date: "06-08-2025", activity: 'Update company name from : "Evigo Co. Ltd." to be : "Evigo Ltd. " on Customer data : "Evigo Co. Ltd." with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 6, date: "06-08-2025", activity: 'Update address on Customer data : "Evigo Ltd. " with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 7, date: "06-08-2025", activity: 'Update password account on Customer data : "Evigo Ltd. " with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 8, date: "06-08-2025", activity: 'Update password account on Customer data : "Evigo Co. Ltd." with Company ID : "".', doneBy: "rootcerol" },
+  { no: 9, date: "31-07-2025", activity: 'Update NPWP from : "01234567801" to be : "012345678011" on Customer data : "Evigo Co. Ltd." with Company ID : "22".', doneBy: "rootcerol" },
+  { no: 10, date: "24-07-2025", activity: 'Update PIC name from : "Cinta Aja-" to be : "Cinta Aja" on Customer data : "Evigo Co. Ltd." with Company ID : "22".', doneBy: "evigo" },
+];
+
+function CompanyProfileActivityHistoryDialog({ children }: { children: React.ReactNode }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredData = companyProfileHistoryData.filter((item) =>
+    item.activity.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.date.includes(searchTerm) ||
+    item.doneBy.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        {children}
+      </DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold">Activity History of Company Profile</DialogTitle>
+        </DialogHeader>
+
+        <div className="mt-4 space-y-4">
+          <div className="flex h-[46px] w-full max-w-[340px] items-center gap-3 rounded-md bg-surface px-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <span className="text-border">|</span>
+            <input
+              type="search"
+              placeholder="Input some text..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </div>
+
+          <div className="rounded-lg border border-border">
+            <Table>
+              <TableHeader className="bg-table-head">
+                <TableRow>
+                  <TableHead className="font-semibold text-foreground w-14">No.</TableHead>
+                  <TableHead className="font-semibold text-foreground w-28 whitespace-nowrap">Date</TableHead>
+                  <TableHead className="font-semibold text-foreground">Activity</TableHead>
+                  <TableHead className="font-semibold text-foreground text-right w-28">Done by</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredData.map((item) => (
+                  <TableRow key={item.no}>
+                    <TableCell className="py-4 text-secondary-foreground">{item.no}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground whitespace-nowrap">{item.date}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground">{item.activity}</TableCell>
+                    <TableCell className="py-4 text-secondary-foreground text-right">{item.doneBy}</TableCell>
+                  </TableRow>
+                ))}
+                {filteredData.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="py-6 text-center text-muted-foreground">
+                      No matching records found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <PaginationFooter />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 const facilityHistoryData = [
   { no: 1, date: "29 June 2026", activity: 'Delete facility name : "PT Evigo Berjaya" on Facility ID : "15501".', doneBy: "rootecerol" },
@@ -157,6 +238,8 @@ function FacilityDetailsDialog({ children }: { children: React.ReactNode }) {
 }
 
 function CustomerDetailsPage() {
+  const [halalRegViewBy, setHalalRegViewBy] = useState("all");
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] pb-6">
       <AppHeader title="Archive" />
@@ -178,7 +261,11 @@ function CustomerDetailsPage() {
         <section className="rounded-lg bg-card p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-display text-2xl font-bold text-foreground">Company Information</h2>
-            <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Activity History</Button>
+            <div className="flex gap-3">
+              <CompanyProfileActivityHistoryDialog>
+                <Button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white">Activity History</Button>
+              </CompanyProfileActivityHistoryDialog>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-y-6 gap-x-4">
@@ -353,10 +440,19 @@ function CustomerDetailsPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold">View by Data</span>
-                    <div className="flex h-[42px] items-center gap-2 rounded-md border border-border px-4 text-sm bg-surface min-w-[280px] justify-between">
-                      All Halal Registration (Exclude Disclaimer)
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    </div>
+                    <Select defaultValue="all">
+                      <SelectTrigger className="w-full min-w-[320px] h-[42px] bg-surface border-border">
+                        <SelectValue placeholder="- Select Data Type -" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                        <SelectItem value="all">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                        <SelectItem value="on-process">Halal Registration On Process</SelectItem>
+                        <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                        <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+                        <SelectItem value="disclaimer">Disclaimer Halal Registration</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -364,34 +460,118 @@ function CustomerDetailsPage() {
                   <Table className="text-[11px] min-w-[1500px]">
                     <TableHeader className="bg-table-head">
                       <TableRow>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">No</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Reg No.</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Reg Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Completed Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Registration Review Date<br/>(Halal Partner)</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Akad Generate<br/>Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Approved Akad<br/>Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">STTD<br/>Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Auditor Assigned<br/>Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Auditor Passed<br/>Date</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Audit Result Review Date<br/>(Halal Quality Board)</TableHead>
-                        <TableHead className="font-semibold text-foreground whitespace-nowrap">Post Audit<br/>Passed Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">No.</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Reg No.</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Reg<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Completed<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Registration<br/>Review Date<br/>(Halal Partner)</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Akad<br/>Generate<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Approved<br/>Akad<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">STTD<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Auditor<br/>Assigned<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Auditor<br/>Passed<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Audit<br/>Result<br/>Review Date<br/>(Halal Quality<br/>Board)</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Post<br/>Audit<br/>Passed Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Fatwa<br/>Passed<br/>Date</TableHead>
+                        <TableHead className="font-semibold text-foreground whitespace-nowrap text-center">Halal<br/>Decree<br/>Generate<br/>Date</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       <TableRow>
-                        <TableCell>1</TableCell>
-                        <TableCell>186492</TableCell>
-                        <TableCell>28 June 2026, 12:00:00</TableCell>
-                        <TableCell>28 June 2026, 12:00:00</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
-                        <TableCell>-</TableCell>
+                        <TableCell className="text-center align-top">1.</TableCell>
+                        <TableCell className="text-center align-top">186592</TableCell>
+                        <TableCell className="text-center align-top">10-12-2025<br/>16:35:24</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">27-01-2000<br/>00:00:00</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="text-center align-top">2.</TableCell>
+                        <TableCell className="text-center align-top">169976</TableCell>
+                        <TableCell className="text-center align-top">07-02-2025<br/>11:02:44</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">06-01-2026<br/>11:05:52</TableCell>
+                        <TableCell className="text-center align-top">20-01-2000<br/>00:00:00</TableCell>
+                        <TableCell className="text-center align-top">28-04-2026<br/>14:19:09</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="text-center align-top">3.</TableCell>
+                        <TableCell className="text-center align-top">166302</TableCell>
+                        <TableCell className="text-center align-top">27-11-2024<br/>22:45:15</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="text-center align-top">4.</TableCell>
+                        <TableCell className="text-center align-top">156265</TableCell>
+                        <TableCell className="text-center align-top">17-07-2024<br/>16:45:42</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="text-center align-top">5.</TableCell>
+                        <TableCell className="text-center align-top">155931</TableCell>
+                        <TableCell className="text-center align-top">12-07-2024<br/>16:05:08</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="text-center align-top">6.</TableCell>
+                        <TableCell className="text-center align-top">153750</TableCell>
+                        <TableCell className="text-center align-top">06-06-2024<br/>15:52:10</TableCell>
+                        <TableCell className="text-center align-top">19-08-2024<br/>11:58:57</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
+                        <TableCell className="text-center align-top">-</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -436,11 +616,23 @@ function CustomerDetailsPage() {
                       <TableRow>
                         <TableCell>1</TableCell>
                         <TableCell>
-                          <FacilityDetailsDialog>
-                            <Button variant="table" size="icon" aria-label="View detail" className="h-8 w-8 text-blue-600 bg-blue-50 hover:bg-blue-100">
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </FacilityDetailsDialog>
+                          <div className="flex items-center gap-2">
+                            <FacilityDetailsDialog>
+                              <Button variant="table" size="icon" aria-label="View detail" className="h-8 w-8 text-blue-600 bg-blue-50 hover:bg-blue-100">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </FacilityDetailsDialog>
+                            {(halalRegViewBy === "company-name" || halalRegViewBy === "branch") && (
+                              <>
+                                <Button variant="table" size="icon" aria-label="Edit" className="h-8 w-8 text-amber-600 bg-amber-50 hover:bg-amber-100">
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button variant="table" size="icon" aria-label="Delete" className="h-8 w-8 text-red-600 bg-red-50 hover:bg-red-100">
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell>4749</TableCell>
                         <TableCell>Evigo China Plant 1</TableCell>
@@ -472,19 +664,17 @@ function CustomerDetailsPage() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-semibold">View by Data</span>
-                      <Select defaultValue="type">
-                        <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
-                          <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+                      <Select value={halalRegViewBy} onValueChange={setHalalRegViewBy}>
+                        <SelectTrigger className="w-[320px] h-[42px] bg-white border-border">
+                          <SelectValue placeholder="- Select Data Type -" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
-                          <SelectItem value="branch">Branch</SelectItem>
-                          <SelectItem value="company-name">Company Name</SelectItem>
-                          <SelectItem value="company-country">Company Country</SelectItem>
-                          <SelectItem value="reg-no">Reg No.</SelectItem>
-                          <SelectItem value="product-group">Product Group and Product Type</SelectItem>
-                          <SelectItem value="certificate">Certificate No.</SelectItem>
-                          <SelectItem value="date">Date Period</SelectItem>
+                          <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                          <SelectItem value="all">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                          <SelectItem value="on-process">Halal Registration On Process</SelectItem>
+                          <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                          <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+                          <SelectItem value="disclaimer">Disclaimer Halal Registration</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -619,21 +809,32 @@ function CustomerDetailsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            {/* Other Accordions */}
-            {[
-              "List of Halal Decree",
-              "List of HPAS Status / Certificate",
-              "Halal Registration Activity History"
-            ].map((title, idx) => (
-              <AccordionItem key={idx} value={`item-${idx}`} className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
-                <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
-                  {title}
-                </AccordionTrigger>
-                <AccordionContent className="px-4 pb-6 pt-2 text-sm text-muted-foreground">
-                  Content for {title} goes here.
-                </AccordionContent>
-              </AccordionItem>
-            ))}
+            <AccordionItem value="list-of-halal-decree" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                List of Halal Decree
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2 text-sm text-muted-foreground">
+                <ListOfHalalDecree />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="list-of-hpas" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                List of HPAS Status / Certificate
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2 text-sm text-muted-foreground">
+                <ListOfHPASStatusCertificate />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="activity-history" className="border border-border rounded-lg bg-card px-2 overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-4 py-4 font-semibold text-[15px] hover:no-underline">
+                Halal Registration Activity History
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-6 pt-2 text-sm text-muted-foreground">
+                <HalalRegistrationActivityHistory />
+              </AccordionContent>
+            </AccordionItem>
 
           </Accordion>
         </section>
@@ -695,12 +896,16 @@ function ListOfAkad() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold">View by Data</span>
-            <Select defaultValue="type">
-              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
-                <SelectValue placeholder="All Akad (Exclude Disclaimer)" />
+            <Select defaultValue="all">
+              <SelectTrigger className="w-[320px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="- Select Data Type -" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="type">All Akad (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                <SelectItem value="all">All Akad (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="on-process">Akad On Process</SelectItem>
+                <SelectItem value="completed">Akad Completed</SelectItem>
+                <SelectItem value="disclaimer">Akad From Disclaimer Halal Registration</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -781,12 +986,17 @@ function RegisteredProduct() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold">View by Data</span>
-            <Select defaultValue="type">
-              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
-                <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+            <Select defaultValue="all">
+              <SelectTrigger className="w-[320px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="- Select Data Type -" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                <SelectItem value="all">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="on-process">Halal Registration On Process</SelectItem>
+                <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+                <SelectItem value="disclaimer">Disclaimer Halal Registration</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -911,12 +1121,17 @@ function RegisteredMaterial() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold">View by Data</span>
-            <Select defaultValue="type">
-              <SelectTrigger className="w-[300px] h-[42px] bg-white border-border">
-                <SelectValue placeholder="All Halal Registration (Exclude Disclaimer)" />
+            <Select defaultValue="all">
+              <SelectTrigger className="w-[320px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="- Select Data Type -" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="type">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                <SelectItem value="all">All Halal Registration (Exclude Disclaimer)</SelectItem>
+                <SelectItem value="on-process">Halal Registration On Process</SelectItem>
+                <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+                <SelectItem value="disclaimer">Disclaimer Halal Registration</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -970,6 +1185,9 @@ function RegisteredMaterial() {
 }
 
 function InquiryOfMaterial() {
+  const [inquiryTab, setInquiryTab] = useState("view");
+  const [inquiryViewBy, setInquiryViewBy] = useState("reg-product-group");
+
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-between mb-4">
@@ -979,7 +1197,7 @@ function InquiryOfMaterial() {
             <span className="text-border">|</span>
             <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
           </div>
-          <Tabs defaultValue="view" className="w-[300px]">
+          <Tabs value={inquiryTab} onValueChange={setInquiryTab} className="w-[300px]">
             <TabsList className="h-[42px] bg-surface p-1 w-full flex">
               <TabsTrigger value="view" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">View by Data</TabsTrigger>
               <TabsTrigger value="history" className="flex-1 h-full text-sm font-semibold data-[state=active]:bg-[#8b5cf6] data-[state=active]:text-white">Activity History</TabsTrigger>
@@ -987,33 +1205,110 @@ function InquiryOfMaterial() {
           </Tabs>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold">View by Data</span>
-            <Select defaultValue="type">
-              <SelectTrigger className="w-[200px] h-[42px] bg-surface border-border">
-                <SelectValue placeholder="Inquiry of Material Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="type">Inquiry of Material Type</SelectItem>
-              </SelectContent>
-            </Select>
+        {inquiryTab === "view" && (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-semibold">View by Data</span>
+              <Select value={inquiryViewBy} onValueChange={setInquiryViewBy}>
+                <SelectTrigger className="w-[230px] h-[42px] bg-white border-border">
+                  <SelectValue placeholder="- Select Data Type -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                  <SelectItem value="inquiry-no">Inquiry of Material No.</SelectItem>
+                  <SelectItem value="inquiry-type">Inquiry of Material Type</SelectItem>
+                  <SelectItem value="material-name">Material Name</SelectItem>
+                  <SelectItem value="producer">Producer</SelectItem>
+                  <SelectItem value="reg-product-group">Reg No. and Product Group</SelectItem>
+                  <SelectItem value="request-year">Request Year</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {inquiryViewBy === "inquiry-no" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Inquiry of Material No.</span>
+                <input
+                  type="text"
+                  placeholder="Input Inquiry of Material No..."
+                  className="w-[280px] h-[42px] px-3 rounded-md border border-border bg-white text-sm outline-none focus:ring-1 focus:ring-brand placeholder:text-muted-foreground"
+                />
+              </div>
+            )}
+
+            {inquiryViewBy === "inquiry-type" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Inquiry of Material Type</span>
+                <Select defaultValue="letter">
+                  <SelectTrigger className="w-[240px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Letter of Inquiry of Material" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="letter">Letter of Inquiry of Material</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {inquiryViewBy === "material-name" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Material Name</span>
+                <input
+                  type="text"
+                  placeholder="Input Material Name..."
+                  className="w-[260px] h-[42px] px-3 rounded-md border border-border bg-white text-sm outline-none focus:ring-1 focus:ring-brand placeholder:text-muted-foreground"
+                />
+              </div>
+            )}
+
+            {inquiryViewBy === "producer" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Producer</span>
+                <input
+                  type="text"
+                  placeholder="Input Producer Name..."
+                  className="w-[260px] h-[42px] px-3 rounded-md border border-border bg-white text-sm outline-none focus:ring-1 focus:ring-brand placeholder:text-muted-foreground"
+                />
+              </div>
+            )}
+
+            {inquiryViewBy === "reg-product-group" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Reg No. and Product Group</span>
+                <Select defaultValue="605654">
+                  <SelectTrigger className="w-[340px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Reg No. and Product Group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="605654">605654 - Produk Biologi (Biological Products)</SelectItem>
+                    <SelectItem value="60365">60365 - Ikan dan Produk Perikanan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {inquiryViewBy === "request-year" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Request Year</span>
+                <Select defaultValue="2026">
+                  <SelectTrigger className="w-[180px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2026">2026</SelectItem>
+                    <SelectItem value="2025">2025</SelectItem>
+                    <SelectItem value="2024">2024</SelectItem>
+                    <SelectItem value="2023">2023</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold">Inquiry of Material Type</span>
-            <Select defaultValue="letter">
-              <SelectTrigger className="w-[200px] h-[42px] bg-surface border-border">
-                <SelectValue placeholder="Letter of Inquiry of Material" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="letter">Letter of Inquiry of Material</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        )}
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-border">
+      {inquiryTab === "view" ? (
+        <div className="overflow-x-auto rounded-lg border border-border">
         <Table className="text-[11px] min-w-[1500px]">
           <TableHeader className="bg-table-head">
             <TableRow>
@@ -1207,6 +1502,34 @@ function InquiryOfMaterial() {
           </TableBody>
         </Table>
       </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <Table className="text-[11px] min-w-[800px]">
+            <TableHeader className="bg-table-head">
+              <TableRow>
+                <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Date</TableHead>
+                <TableHead className="font-semibold text-foreground">Inquiry of Material No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Inquiry of Material Type</TableHead>
+                <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+                <TableHead className="font-semibold text-foreground">Activity</TableHead>
+                <TableHead className="font-semibold text-foreground text-right">Done by</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>1</TableCell>
+                <TableCell>29 June 2026</TableCell>
+                <TableCell>BB0868/SH/LPPOM MU...</TableCell>
+                <TableCell>Letter of Inquiry of Material</TableCell>
+                <TableCell>605654</TableCell>
+                <TableCell>Add material name : "Celatom FW 14" on Material ID : "1".</TableCell>
+                <TableCell className="text-right">rootcerol</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      )}
       <PaginationFooter />
     </>
   );
@@ -1216,12 +1539,13 @@ function InquiryOfMaterial() {
 
 function InquiryOfNotificationLetter() {
   const [activeTab, setActiveTab] = useState<"view-by-data" | "activity-history">("view-by-data");
+  const [notificationViewBy, setNotificationViewBy] = useState("notification-type");
 
   return (
     <>
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-4">
-          <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
             <Search className="h-4 w-4 text-muted-foreground" />
             <span className="text-border">|</span>
             <input
@@ -1231,12 +1555,12 @@ function InquiryOfNotificationLetter() {
             />
           </div>
           
-          <div className="flex h-10 items-center rounded-md bg-surface p-1">
+          <div className="flex h-[42px] items-center rounded-md bg-surface p-1">
             <button
               onClick={() => setActiveTab("view-by-data")}
-              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+              className={`h-full rounded-sm px-6 text-sm font-semibold transition-colors ${
                 activeTab === "view-by-data"
-                  ? "bg-brand text-white shadow-sm"
+                  ? "bg-[#8b5cf6] text-white shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -1244,9 +1568,9 @@ function InquiryOfNotificationLetter() {
             </button>
             <button
               onClick={() => setActiveTab("activity-history")}
-              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+              className={`h-full rounded-sm px-6 text-sm font-semibold transition-colors ${
                 activeTab === "activity-history"
-                  ? "bg-brand text-white shadow-sm"
+                  ? "bg-[#8b5cf6] text-white shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -1257,18 +1581,79 @@ function InquiryOfNotificationLetter() {
 
         {activeTab === "view-by-data" && (
           <div className="flex items-center gap-4">
-            <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
             <div className="flex items-center gap-3">
-              <Select defaultValue="rks">
-                <SelectTrigger className="h-10 w-[200px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
-                  <span className="font-semibold text-foreground mr-1">Notification Letter Type</span>
-                  <SelectValue />
+              <span className="text-sm font-semibold">View by Data</span>
+              <Select value={notificationViewBy} onValueChange={setNotificationViewBy}>
+                <SelectTrigger className="w-[230px] h-[42px] bg-white border-border">
+                  <SelectValue placeholder="- Select Data Type -" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="rks">RKS</SelectItem>
+                  <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                  <SelectItem value="notification-no">Notification Letter No.</SelectItem>
+                  <SelectItem value="notification-type">Notification Letter Type</SelectItem>
+                  <SelectItem value="reg-product-group">Reg No. and Product Group</SelectItem>
+                  <SelectItem value="request-year">Request Year</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
+            {notificationViewBy === "notification-no" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Notification Letter No.</span>
+                <input
+                  type="text"
+                  placeholder="Input Notification Letter No..."
+                  className="w-[280px] h-[42px] px-3 rounded-md border border-border bg-white text-sm outline-none focus:ring-1 focus:ring-brand placeholder:text-muted-foreground"
+                />
+              </div>
+            )}
+
+            {notificationViewBy === "notification-type" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Notification Letter Type</span>
+                <Select defaultValue="rks">
+                  <SelectTrigger className="w-[200px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="rks">RKS</SelectItem>
+                    <SelectItem value="skp">SKP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {notificationViewBy === "reg-product-group" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Reg No. and Product Group</span>
+                <Select defaultValue="605654">
+                  <SelectTrigger className="w-[340px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Reg No. and Product Group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="605654">605654 - Produk Biologi (Biological Products)</SelectItem>
+                    <SelectItem value="60365">60365 - Ikan dan Produk Perikanan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {notificationViewBy === "request-year" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Request Year</span>
+                <Select defaultValue="2026">
+                  <SelectTrigger className="w-[180px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2026">2026</SelectItem>
+                    <SelectItem value="2025">2025</SelectItem>
+                    <SelectItem value="2024">2024</SelectItem>
+                    <SelectItem value="2023">2023</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -1352,12 +1737,13 @@ function InquiryOfNotificationLetter() {
 
 function RegularReport() {
   const [activeTab, setActiveTab] = useState<"view-by-data" | "activity-history">("view-by-data");
+  const [reportViewBy, setReportViewBy] = useState("reg-product-group");
   
   return (
     <>
-      <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-4">
-          <div className="flex h-10 w-full max-w-[280px] items-center gap-3 rounded-md bg-surface px-4">
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-[42px] w-[250px] items-center gap-3 rounded-md bg-surface px-4">
             <Search className="h-4 w-4 text-muted-foreground" />
             <span className="text-border">|</span>
             <input
@@ -1367,12 +1753,12 @@ function RegularReport() {
             />
           </div>
           
-          <div className="flex h-10 items-center rounded-md bg-surface p-1">
+          <div className="flex h-[42px] items-center rounded-md bg-surface p-1">
             <button
               onClick={() => setActiveTab("view-by-data")}
-              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+              className={`h-full rounded-sm px-6 text-sm font-semibold transition-colors ${
                 activeTab === "view-by-data"
-                  ? "bg-brand text-white shadow-sm"
+                  ? "bg-[#8b5cf6] text-white shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -1380,9 +1766,9 @@ function RegularReport() {
             </button>
             <button
               onClick={() => setActiveTab("activity-history")}
-              className={`h-full rounded-sm px-6 text-sm font-medium transition-colors ${
+              className={`h-full rounded-sm px-6 text-sm font-semibold transition-colors ${
                 activeTab === "activity-history"
-                  ? "bg-brand text-white shadow-sm"
+                  ? "bg-[#8b5cf6] text-white shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -1393,27 +1779,79 @@ function RegularReport() {
 
         {activeTab === "view-by-data" && (
           <div className="flex items-center gap-4">
-            <span className="text-sm font-semibold whitespace-nowrap">View by Data</span>
             <div className="flex items-center gap-3">
-              <Select defaultValue="reg-no-and-product-group">
-                <SelectTrigger className="h-10 w-[240px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
-                  <SelectValue />
+              <span className="text-sm font-semibold">View by Data</span>
+              <Select value={reportViewBy} onValueChange={setReportViewBy}>
+                <SelectTrigger className="w-[230px] h-[42px] bg-white border-border">
+                  <SelectValue placeholder="- Select Data Type -" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="reg-no-and-product-group">Reg No. and Product Group</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              <Select defaultValue="635466">
-                <SelectTrigger className="h-10 w-[280px] bg-surface border-transparent rounded-md text-secondary-foreground font-medium">
-                  <span className="font-semibold text-foreground mr-1">Reg No. and Product Group</span>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="635466">635466 - Susu dan analognya</SelectItem>
+                  <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                  <SelectItem value="report-no">Regular Report No.</SelectItem>
+                  <SelectItem value="reg-product-group">Reg No. and Product Group</SelectItem>
+                  <SelectItem value="facility">Facility</SelectItem>
+                  <SelectItem value="report-year">Report Year</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
+            {reportViewBy === "report-no" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Regular Report No.</span>
+                <input
+                  type="text"
+                  placeholder="Input Regular Report No..."
+                  className="w-[280px] h-[42px] px-3 rounded-md border border-border bg-white text-sm outline-none focus:ring-1 focus:ring-brand placeholder:text-muted-foreground"
+                />
+              </div>
+            )}
+
+            {reportViewBy === "reg-product-group" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Reg No. and Product Group</span>
+                <Select defaultValue="635466">
+                  <SelectTrigger className="w-[320px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Reg No. and Product Group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="635466">635466 - Susu dan analognya</SelectItem>
+                    <SelectItem value="60365">60365 - Ikan dan Produk Perikanan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {reportViewBy === "facility" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Facility</span>
+                <Select defaultValue="facility-1">
+                  <SelectTrigger className="w-[260px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Facility" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="facility-1">ID : 1 - NAME : Facility A</SelectItem>
+                    <SelectItem value="facility-2">ID : 2 - NAME : Facility B</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {reportViewBy === "report-year" && (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold">Report Year</span>
+                <Select defaultValue="2026">
+                  <SelectTrigger className="w-[180px] h-[42px] bg-white border-border">
+                    <SelectValue placeholder="Select Year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2026">2026</SelectItem>
+                    <SelectItem value="2025">2025</SelectItem>
+                    <SelectItem value="2024">2024</SelectItem>
+                    <SelectItem value="2023">2023</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -1665,6 +2103,198 @@ function RegularReport() {
         </div>
       )}
       
+      <PaginationFooter />
+    </>
+  );
+}
+
+function ListOfHalalDecree() {
+  const [viewBy, setViewBy] = useState("all");
+
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select value={viewBy} onValueChange={setViewBy}>
+              <SelectTrigger className="w-[380px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="- Select Data Type -" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                <SelectItem value="all">All Halal Registration (Valid & Expired Certified)</SelectItem>
+                <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[1500px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground w-12">No</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Process Status /<br/>Halal Decree</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Certification Agreement</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Reg No.</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">STTD</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Reg Status</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Product Group</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">BPJPH Product Type</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Application Type</TableHead>
+              <TableHead rowSpan={2} className="align-middle font-semibold text-foreground">Halal Decree No.</TableHead>
+              <TableHead colSpan={2} className="font-semibold text-foreground text-center border-b border-border">Period of Halal Decree</TableHead>
+            </TableRow>
+            <TableRow>
+              <TableHead className="font-semibold text-foreground text-center">Valid Start</TableHead>
+              <TableHead className="font-semibold text-foreground text-center">Valid End</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={12} className="text-center py-6 text-muted-foreground font-medium">No Data Available in Table</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <PaginationFooter />
+    </>
+  );
+}
+
+function ListOfHPASStatusCertificate() {
+  const [viewBy, setViewBy] = useState("all");
+
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">View by Data</span>
+            <Select value={viewBy} onValueChange={setViewBy}>
+              <SelectTrigger className="w-[380px] h-[42px] bg-white border-border">
+                <SelectValue placeholder="- Select Data Type -" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="select-data-type">- Select Data Type -</SelectItem>
+                <SelectItem value="all">All Halal Registration (Valid & Expired Certified)</SelectItem>
+                <SelectItem value="valid">Valid Certified Halal Registration</SelectItem>
+                <SelectItem value="expired">Expired Certified Halal Registration</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[1500px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+              <TableHead className="font-semibold text-foreground text-center w-20">Action</TableHead>
+              <TableHead className="font-semibold text-foreground">Reg No.</TableHead>
+              <TableHead className="font-semibold text-foreground">Facility ID</TableHead>
+              <TableHead className="font-semibold text-foreground">Facility Name</TableHead>
+              <TableHead className="font-semibold text-foreground">HPAS No.</TableHead>
+              <TableHead className="font-semibold text-foreground">HPAS Type</TableHead>
+              <TableHead className="font-semibold text-foreground">HPAS Audit Result</TableHead>
+              <TableHead className="font-semibold text-foreground">Fatwa Passed Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Valid Start</TableHead>
+              <TableHead className="font-semibold text-foreground">Valid End</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell className="text-center">
+                <Button variant="table" size="icon" className="h-8 w-8 text-green-600 bg-green-50 hover:bg-green-100 mx-auto">
+                  <Download className="h-4 w-4" />
+                </Button>
+              </TableCell>
+              <TableCell>605654</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>-</TableCell>
+              <TableCell>Attached</TableCell>
+              <TableCell>Attached</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <PaginationFooter />
+    </>
+  );
+}
+
+function HalalRegistrationActivityHistory() {
+  const [selectedReg, setSelectedReg] = useState("169976");
+
+  return (
+    <>
+      <div className="flex flex-wrap gap-4 justify-between mb-4">
+        <div className="flex h-[42px] w-full max-w-[300px] items-center gap-3 rounded-md bg-surface px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <span className="text-border">|</span>
+          <input type="search" placeholder="Input some text..." className="h-full w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold whitespace-nowrap">Reg No. and Product Group</span>
+            <Select value={selectedReg} onValueChange={setSelectedReg}>
+              <SelectTrigger className="w-[520px] h-[42px] bg-white border-border text-left">
+                <SelectValue placeholder="Select Reg No. and Product Group" />
+              </SelectTrigger>
+              <SelectContent className="max-w-[800px]">
+                <SelectItem value="186592">Reg No. : 186592 - Product Group : Penyediaan Makanan dan Minuman Dengan Pengolahan (Foods and Beverages Service with Process)</SelectItem>
+                <SelectItem value="169976">Reg No. : 169976 - Product Group : Servis (Services)</SelectItem>
+                <SelectItem value="166302">Reg No. : 166302 - Product Group : Alat Tulis dan Perlengkapan Kantor (Stationary)</SelectItem>
+                <SelectItem value="156265">Reg No. : 156265 - Product Group : Aksesoris (Clothing Accessories)</SelectItem>
+                <SelectItem value="155931">Reg No. : 155931 - Product Group : Jasa Pendistribusian (Product Transportation Service)</SelectItem>
+                <SelectItem value="154929">Reg No. : 154929 - Product Group : Bahan Obat (Drugs Ingredients)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-lg border border-border">
+        <Table className="text-[11px] min-w-[1200px]">
+          <TableHeader className="bg-table-head">
+            <TableRow>
+              <TableHead className="font-semibold text-foreground w-12">No.</TableHead>
+              <TableHead className="font-semibold text-foreground w-32">Date</TableHead>
+              <TableHead className="font-semibold text-foreground">Activity</TableHead>
+              <TableHead className="font-semibold text-foreground">Next Process</TableHead>
+              <TableHead className="font-semibold text-foreground">Done by</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell>29 June 2026</TableCell>
+              <TableCell>Delete material name : "MyVla Vla Bubuk Instan Rasa Vanila" on Material ID : "1".</TableCell>
+              <TableCell>-</TableCell>
+              <TableCell>rootcerol</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
       <PaginationFooter />
     </>
   );
